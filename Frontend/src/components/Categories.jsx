@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Categories = ({ categories }) => {
   return (
@@ -7,7 +8,11 @@ const Categories = ({ categories }) => {
         {categories &&
           categories.map((category) => (
             <div key={category.name} className="col-md-3">
-              <button className="btn btn-light">{category.name}</button>
+              <button className="btn btn-light">
+                <Link to="/products" state={{ state: category.name }}>
+                  {category.name}
+                </Link>
+              </button>
             </div>
           ))}
       </div>

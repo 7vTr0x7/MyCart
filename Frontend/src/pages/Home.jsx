@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Header from "../components/Header";
 import { useFetchCategories } from "../hooks/useFetchCategories";
 import Categories from "./../components/Categories";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const data = useFetchCategories();
@@ -21,7 +22,9 @@ const Home = () => {
           />
         </div>
         <div className="text-center">
-          <button className="btn btn-light">All Products</button>
+          <button className="btn btn-light">
+            <Link to="/products">All Products</Link>
+          </button>
         </div>
       </main>
     </>
