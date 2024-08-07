@@ -23,7 +23,9 @@ const Home = () => {
         </div>
         <div className="text-center">
           <button className="btn btn-light">
-            <Link to="/products">All Products</Link>
+            <Link className="nav-link" to="/products">
+              All Products
+            </Link>
           </button>
         </div>
       </main>

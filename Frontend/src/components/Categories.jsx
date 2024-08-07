@@ -9,7 +9,10 @@ const Categories = ({ categories }) => {
           categories.map((category) => (
             <div key={category.name} className="col-md-3">
               <button className="btn btn-light">
-                <Link to="/products" state={{ state: category.name }}>
+                <Link
+                  to="/products"
+                  className="nav-link"
+                  state={{ state: category.name }}>
                   {category.name}
                 </Link>
               </button>
