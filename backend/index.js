@@ -127,14 +127,17 @@ app.get("/api/categories/:categoryId", async (req, res) => {
   }
 });
 
-const addMultipleProducts = (products) => {
+const addMultipleProducts = async (products) => {
   try {
     const productsArray = [];
-    products.forEach(async (prod) => {
-      const newProduct = new Product(prod);
-      const savedProd = await newProduct.save();
-      productsArray.push(savedProd);
-    });
+    if (products.length > 0) {
+      for (let i = 0; i < products.length; i++) {
+        const newProduct = new Product(products[i]);
+        const savedProd = await newProduct.save();
+        productsArray.push(savedProd);
+      }
+    }
+
     return productsArray;
   } catch (error) {
     console.log(error);
