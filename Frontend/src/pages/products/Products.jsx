@@ -25,7 +25,7 @@ const Products = () => {
             <FilterSection />
           </div>
           <div className="col-md-9">
-            <ProductsSection />
+            <ProductsSection products={productsData} />
           </div>
         </div>
       </main>
