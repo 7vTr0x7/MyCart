@@ -16,6 +16,20 @@ const productSchema = new mongoose.Schema({
   discountPercent: {
     type: Number,
   },
+  rating: {
+    type: Number,
+    required: true,
+  },
+  categories: {
+    category: {
+      type: String,
+      required: true,
+    },
+    subCategory: {
+      type: String,
+      required: true,
+    },
+  },
 });
 
 const Product = mongoose.model("Product", productSchema);
