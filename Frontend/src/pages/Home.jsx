@@ -20,6 +20,9 @@ const Home = () => {
             className="img-fluid"
           />
         </div>
+        <div className="text-center">
+          <button className="btn btn-light">All Products</button>
+        </div>
       </main>
     </>
   );
