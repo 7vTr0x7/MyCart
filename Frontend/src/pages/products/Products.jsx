@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import { useLocation } from "react-router-dom";
 import { useFetchProducts } from "../../hooks/useFetchProducts";
 import FilterSection from "./features/FilterSection";
+import ProductsSection from "./features/ProductsSection";
 
 const Products = () => {
   const location = useLocation();
@@ -22,6 +23,9 @@ const Products = () => {
         <div className="row">
           <div className="col-md-3">
             <FilterSection />
+          </div>
+          <div className="col-md-9">
+            <ProductsSection />
           </div>
         </div>
       </main>
