@@ -2,7 +2,7 @@ import React from "react";
 import { CiHeart } from "react-icons/ci";
 const ProductsSection = ({ products }) => {
   return (
-    <div className="bg-body-tertiary py-4 px-5 ">
+    <div className="bg-body-tertiary py-4 px-5 mx-3">
       <p>
         <b>Showing All Products</b> ( showing {products && products.length}{" "}
         products )
