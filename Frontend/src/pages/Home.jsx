@@ -5,14 +5,20 @@ import Categories from "./../components/Categories";
 
 const Home = () => {
   const data = useFetchCategories();
-  console.log(data);
 
   return (
     <>
       <Header />
       <main className="container py-4">
         <div>
-          <Categories categories={data.data.categories} />
+          <Categories categories={data?.data?.categories} />
+        </div>
+        <div className="my-3">
+          <img
+            alt="product"
+            src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-15-finish-select-202309-6-1inch_GEO_EMEA_FMT_WHH?wid=1280&hei=492&fmt=p-jpg"
+            className="img-fluid"
+          />
         </div>
       </main>
     </>
