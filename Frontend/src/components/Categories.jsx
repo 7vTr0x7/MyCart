@@ -12,7 +12,7 @@ const Categories = ({ categories }) => {
                 <Link
                   to="/products"
                   className="nav-link"
-                  state={{ state: category.name }}>
+                  state={{ category: category.name }}>
                   {category.name}
                 </Link>
               </button>
