@@ -83,6 +83,28 @@ app.get("/api/products/:productId", async (req, res) => {
   }
 });
 
+const readCategories = async () => {
+  try {
+    const categories = await Category.find();
+    return categories;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("/api/categories", async (req, res) => {
+  try {
+    const categories = await readCategories();
+    if (categories.length > 0) {
+      res.json({ data: { categories } });
+    } else {
+      res.status(404).json({ error: "Categories not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to get categories ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
