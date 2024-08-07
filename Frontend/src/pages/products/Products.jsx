@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../components/Header";
 import { useLocation } from "react-router-dom";
 import { useFetchProducts } from "../../hooks/useFetchProducts";
+import FilterSection from "./features/FilterSection";
 
 const Products = () => {
   const location = useLocation();
@@ -17,7 +18,13 @@ const Products = () => {
   return (
     <>
       <Header />
-      <main></main>
+      <main>
+        <div className="row">
+          <div className="col-md-3">
+            <FilterSection />
+          </div>
+        </div>
+      </main>
     </>
   );
 };
