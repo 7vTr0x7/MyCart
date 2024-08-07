@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import { useFetchCategories } from "../../hooks/useFetchCategories";
 import Categories from "./features/Categories";
 import { Link } from "react-router-dom";
+import img from "../../utils/iphone-15.jpeg";
 
 const Home = () => {
   const data = useFetchCategories();
@@ -15,11 +16,7 @@ const Home = () => {
           <Categories categories={data?.data?.categories} />
         </div>
         <div className="my-3">
-          <img
-            alt="product"
-            src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-15-finish-select-202309-6-1inch_GEO_EMEA_FMT_WHH?wid=1280&hei=492&fmt=p-jpg"
-            className="img-fluid"
-          />
+          <img alt="product" src={img} className="img-fluid" />
         </div>
         <div className="text-center">
           <button className="btn btn-light">

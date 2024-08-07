@@ -20,7 +20,7 @@ const Products = () => {
     <>
       <Header />
       <main>
-        <div className="row">
+        <div className="row ">
           <div className="col-md-3">
             <FilterSection />
           </div>
