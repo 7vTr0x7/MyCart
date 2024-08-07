@@ -38,6 +38,29 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
+const addProduct = async (product) => {
+  try {
+    const newProduct = new Product(product);
+    const savedProduct = await newProduct.save();
+    return savedProduct;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.post("/api/products", async (req, res) => {
+  try {
+    const product = await addProduct(req.body);
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ error: "Product not Found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to add product ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
