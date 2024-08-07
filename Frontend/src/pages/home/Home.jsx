@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import { useFetchCategories } from "../../hooks/useFetchCategories";
-import Categories from "./Categories";
+import Categories from "./features/Categories";
 import { Link } from "react-router-dom";
 
 const Home = () => {

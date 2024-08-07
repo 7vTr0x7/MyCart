@@ -6,7 +6,6 @@ import { useFetchProducts } from "../../hooks/useFetchProducts";
 const Products = () => {
   const location = useLocation();
   const { category } = location.state || {};
-  console.log(category);
 
   const products = useFetchProducts();
   const productsData = category
@@ -15,7 +14,6 @@ const Products = () => {
       )
     : products?.data?.products;
 
-  console.log(productsData);
   return (
     <>
       <Header />
