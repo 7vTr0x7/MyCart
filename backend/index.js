@@ -127,6 +127,33 @@ app.get("/api/categories/:categoryId", async (req, res) => {
   }
 });
 
+const addMultipleProducts = (products) => {
+  try {
+    const productsArray = [];
+    products.forEach(async (prod) => {
+      const newProduct = new Product(prod);
+      const savedProd = await newProduct.save();
+      productsArray.push(savedProd);
+    });
+    return productsArray;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.post("/api/products/multiple", async (req, res) => {
+  try {
+    const products = await addMultipleProducts(req.body);
+    if (products.length > 0) {
+      res.json(products);
+    } else {
+      res.status(404).json({ error: "Product not Found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to add product ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
