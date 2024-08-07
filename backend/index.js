@@ -116,7 +116,7 @@ const readCategoryById = async (id) => {
 
 app.get("/api/categories/:categoryId", async (req, res) => {
   try {
-    const category = await readCategoryById(req.params.id);
+    const category = await readCategoryById(req.params.categoryId);
     if (category) {
       res.json({ data: { category } });
     } else {
