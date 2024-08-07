@@ -13,9 +13,9 @@ const ProductsSection = ({ products }) => {
           products.map((prod) => (
             <div key={prod._id} className="col-md-3">
               <div className="card rounded-0 mt-2">
-                <div className="card-header text-center">
+                <div className="">
                   <img
-                    className="img-fluid h-50"
+                    className="img-fluid h-50 w-100"
                     alt={prod.name}
                     src={`${prod.imageUrl}${prod.name}`}
                   />
@@ -34,7 +34,7 @@ const ProductsSection = ({ products }) => {
                     </p>
                   </div>
                   <div className="sticky-bottom">
-                    <button className="btn btn-outline-secondary rounded-0 w-100 text-dark  fw-bold">
+                    <button className="btn btn-outline-secondary rounded-0 w-100   fw-bold">
                       Add to Cart
                     </button>
                   </div>
