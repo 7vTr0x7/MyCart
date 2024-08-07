@@ -105,6 +105,28 @@ app.get("/api/categories", async (req, res) => {
   }
 });
 
+const readCategoryById = async (id) => {
+  try {
+    const category = await Category.findById(id);
+    return category;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("/api/categories/:categoryId", async (req, res) => {
+  try {
+    const category = await readCategoryById(req.params.id);
+    if (category) {
+      res.json({ data: { category } });
+    } else {
+      res.status(404).json({ error: "Category not Found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to get category ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
