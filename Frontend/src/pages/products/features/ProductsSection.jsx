@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { CiHeart } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa";
+
 const ProductsSection = ({ products }) => {
   return (
     <div className="bg-body-tertiary py-4 px-5 mx-3">
@@ -14,11 +16,13 @@ const ProductsSection = ({ products }) => {
             <div key={prod._id} className="col-md-3">
               <div className="card rounded-0 mt-3 ">
                 <div>
-                  <span
-                    className="fs-4 mx-2"
-                    style={{ position: "absolute", right: "0" }}>
-                    <CiHeart />
-                  </span>
+                  <CiHeart
+                    className="fs-4 mt-2 mx-2"
+                    style={{
+                      position: "absolute",
+                      right: "0",
+                    }}
+                  />
                   <img
                     className="img-fluid card-img-top"
                     alt={prod.name}
