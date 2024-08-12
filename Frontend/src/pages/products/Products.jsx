@@ -24,7 +24,7 @@ const Products = () => {
           <div className="col-md-3">
             <FilterSection products={productsData} />
           </div>
-          <div className="col-md-9 p-0">
+          <div className="col-md-9 ">
             <ProductsSection products={productsData} />
           </div>
         </div>

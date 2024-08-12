@@ -56,6 +56,72 @@ const FilterSection = ({ products }) => {
               ))}
           </div>
         </div>
+        <div className="mt-4">
+          <h6>Rating</h6>
+          <div>
+            <div>
+              <label htmlFor="4">
+                <input
+                  type="radio"
+                  name="rating"
+                  id="4"
+                  value={"4 stars & above"}
+                />{" "}
+                {"4 stars & above"}
+              </label>
+            </div>
+            <div>
+              <label htmlFor="3">
+                <input
+                  type="radio"
+                  name="rating"
+                  id="3"
+                  value={"3 stars & above"}
+                />{" "}
+                {"3 stars & above"}
+              </label>
+            </div>
+            <div>
+              <label htmlFor="2">
+                <input
+                  type="radio"
+                  name="rating"
+                  id="2"
+                  value={"2 stars & above"}
+                />{" "}
+                {"2 stars & above"}
+              </label>
+            </div>
+            <div>
+              <label htmlFor="1">
+                <input
+                  type="radio"
+                  name="rating"
+                  id="1"
+                  value={"1 star & above"}
+                />{" "}
+                {"1 star & above"}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="mt-4">
+          <h6>Sort by</h6>
+          <div>
+            <div>
+              <label htmlFor="low">
+                <input type="radio" name="sortBy" id="low" value={"low"} />{" "}
+                {"Price - Low to High"}
+              </label>
+            </div>
+            <div>
+              <label htmlFor="high">
+                <input type="radio" name="sortBy" id="high" value={"high"} />{" "}
+                {"Price - High to Low"}
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
