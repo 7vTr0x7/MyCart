@@ -7,7 +7,7 @@ import ProductsSection from "./features/ProductsSection";
 const Products = () => {
   const [allProductsData, setAllProductsData] = useState([]);
   const [productsData, setProductsData] = useState([]);
-  const [priceRange, setPriceRange] = useState("");
+  const [priceRange, setPriceRange] = useState(10);
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
 
   const location = useLocation();
@@ -26,6 +26,12 @@ const Products = () => {
     setAllProductsData(productsArray);
     productsArray;
   }, [products, category]);
+
+  const clearFilterHandler = () => {
+    setPriceRange(10);
+    setSelectedSubCategory([]);
+    setProductsData(allProductsData);
+  };
 
   const categories =
     allProductsData &&
@@ -94,7 +100,11 @@ const Products = () => {
               <div className=" d-flex justify-content-between">
                 <h5>Filters</h5>
                 <div>
-                  <button className="btn btn-light fw-semibold">Clear</button>
+                  <button
+                    className="btn btn-light fw-semibold"
+                    onClick={clearFilterHandler}>
+                    Clear
+                  </button>
                 </div>
               </div>
               <div className="mt-4">
@@ -124,6 +134,7 @@ const Products = () => {
                           <input
                             id={cat}
                             type="checkbox"
+                            checked={selectedSubCategory.includes(cat)}
                             value={cat}
                             onChange={categoryChangeHandler}
                           />{" "}
