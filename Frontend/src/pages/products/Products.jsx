@@ -3,6 +3,8 @@ import Header from "../../components/Header";
 import { useLocation } from "react-router-dom";
 import { useFetchProducts } from "../../hooks/useFetchProducts";
 import ProductsSection from "./features/ProductsSection";
+import { useDispatch, useSelector } from "react-redux";
+import { addProducts } from "./productsSlice";
 
 const Products = () => {
   const [allProductsData, setAllProductsData] = useState([]);
@@ -15,19 +17,20 @@ const Products = () => {
   const location = useLocation();
   const { category } = location.state || {};
 
-  const products = useFetchProducts();
+  const allProds = useFetchProducts();
+
+  const products = useSelector((state) => state.products);
 
   useEffect(() => {
     const productsArray = category
-      ? products?.data?.products.filter(
+      ? products.products.filter(
           (prod) => prod.categories.category === category
         )
-      : products?.data?.products;
+      : products.products;
 
     setProductsData(productsArray);
     setAllProductsData(productsArray);
-    productsArray;
-  }, [products, category]);
+  }, [products.products, category]);
 
   const clearFilterHandler = () => {
     setPriceRange("");
