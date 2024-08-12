@@ -9,6 +9,7 @@ const Products = () => {
   const [productsData, setProductsData] = useState([]);
   const [priceRange, setPriceRange] = useState("");
   const [rating, setRating] = useState("");
+  const [sortBy, setSortBy] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
 
   const location = useLocation();
@@ -32,6 +33,7 @@ const Products = () => {
     setPriceRange("");
     setSelectedSubCategory([]);
     setRating("");
+    setSortBy("");
     setProductsData(allProductsData);
   };
 
@@ -54,7 +56,7 @@ const Products = () => {
 
   const filteredSubCategories = filterSubCategories();
 
-  const filterProductsHandler = (categories, price, rating) => {
+  const filterProductsHandler = (categories, price, rating, sort) => {
     let filtered = [];
 
     if (categories.length === 0) {
@@ -73,12 +75,19 @@ const Products = () => {
       filtered = filtered.filter((prod) => prod.price < price);
     }
 
+    if (sortBy) {
+      if (sort === "low") {
+        filtered = [...filtered].sort((a, b) => a.price - b.price);
+      } else {
+        filtered = [...filtered].sort((a, b) => b.price - a.price);
+      }
+    }
+
     setProductsData(filtered);
   };
   const handlePriceRange = (e) => {
     const price = e.target.value;
     setPriceRange(price);
-    filterProductsHandler(selectedSubCategory, price, rating);
   };
 
   const categoryChangeHandler = (e) => {
@@ -92,14 +101,21 @@ const Products = () => {
     }
 
     setSelectedSubCategory(updatedCategories);
-    filterProductsHandler(updatedCategories, priceRange, rating);
   };
 
   const handleRating = (e) => {
     const { value } = e.target;
     setRating(value);
-    filterProductsHandler(selectedSubCategory, priceRange, value);
   };
+
+  const handleSortBy = (e) => {
+    const { value } = e.target;
+    setSortBy(value);
+  };
+
+  useEffect(() => {
+    filterProductsHandler(selectedSubCategory, priceRange, rating, sortBy);
+  }, [sortBy, selectedSubCategory, priceRange, rating]);
 
   return (
     <>
@@ -221,7 +237,9 @@ const Products = () => {
                         type="radio"
                         name="sortBy"
                         id="low"
+                        checked={sortBy === "low"}
                         value={"low"}
+                        onChange={handleSortBy}
                       />{" "}
                       {"Price - Low to High"}
                     </label>
@@ -231,8 +249,10 @@ const Products = () => {
                       <input
                         type="radio"
                         name="sortBy"
+                        checked={sortBy === "high"}
                         id="high"
                         value={"high"}
+                        onChange={handleSortBy}
                       />{" "}
                       {"Price - High to Low"}
                     </label>
