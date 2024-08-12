@@ -7,7 +7,8 @@ import ProductsSection from "./features/ProductsSection";
 const Products = () => {
   const [allProductsData, setAllProductsData] = useState([]);
   const [productsData, setProductsData] = useState([]);
-  const [priceRange, setPriceRange] = useState(10);
+  const [priceRange, setPriceRange] = useState("");
+  const [rating, setRating] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
 
   const location = useLocation();
@@ -28,8 +29,9 @@ const Products = () => {
   }, [products, category]);
 
   const clearFilterHandler = () => {
-    setPriceRange(10);
+    setPriceRange("");
     setSelectedSubCategory([]);
+    setRating("");
     setProductsData(allProductsData);
   };
 
@@ -52,15 +54,19 @@ const Products = () => {
 
   const filteredSubCategories = filterSubCategories();
 
-  const filterProductsHandler = (categories, price) => {
+  const filterProductsHandler = (categories, price, rating) => {
     let filtered = [];
 
-    if (categories.length == 0) {
+    if (categories.length === 0) {
       filtered = allProductsData;
     } else {
       filtered = allProductsData.filter((prod) =>
         categories.includes(prod.categories.subCategory)
       );
+    }
+
+    if (rating) {
+      filtered = filtered.filter((prod) => prod.rating >= Number(rating));
     }
 
     if (price) {
@@ -69,11 +75,10 @@ const Products = () => {
 
     setProductsData(filtered);
   };
-
   const handlePriceRange = (e) => {
     const price = e.target.value;
     setPriceRange(price);
-    filterProductsHandler(selectedSubCategory, price);
+    filterProductsHandler(selectedSubCategory, price, rating);
   };
 
   const categoryChangeHandler = (e) => {
@@ -87,7 +92,13 @@ const Products = () => {
     }
 
     setSelectedSubCategory(updatedCategories);
-    filterProductsHandler(updatedCategories, priceRange);
+    filterProductsHandler(updatedCategories, priceRange, rating);
+  };
+
+  const handleRating = (e) => {
+    const { value } = e.target;
+    setRating(value);
+    filterProductsHandler(selectedSubCategory, priceRange, value);
   };
 
   return (
@@ -119,7 +130,7 @@ const Products = () => {
                   onChange={handlePriceRange}
                 />
                 <div className="d-flex justify-content-between">
-                  <label>{priceRange}</label>
+                  <label>{priceRange || 10}</label>
                   <label>2000</label>
                 </div>
               </div>
@@ -153,7 +164,9 @@ const Products = () => {
                         type="radio"
                         name="rating"
                         id="4"
-                        value={"4 stars & above"}
+                        value={4}
+                        checked={rating === "4"}
+                        onChange={handleRating}
                       />{" "}
                       {"4 stars & above"}
                     </label>
@@ -164,7 +177,9 @@ const Products = () => {
                         type="radio"
                         name="rating"
                         id="3"
-                        value={"3 stars & above"}
+                        value={3}
+                        checked={rating === "3"}
+                        onChange={handleRating}
                       />{" "}
                       {"3 stars & above"}
                     </label>
@@ -175,7 +190,9 @@ const Products = () => {
                         type="radio"
                         name="rating"
                         id="2"
-                        value={"2 stars & above"}
+                        value={2}
+                        checked={rating === "2"}
+                        onChange={handleRating}
                       />{" "}
                       {"2 stars & above"}
                     </label>
@@ -186,7 +203,9 @@ const Products = () => {
                         type="radio"
                         name="rating"
                         id="1"
-                        value={"1 star & above"}
+                        value={1}
+                        checked={rating === "1"}
+                        onChange={handleRating}
                       />{" "}
                       {"1 star & above"}
                     </label>
