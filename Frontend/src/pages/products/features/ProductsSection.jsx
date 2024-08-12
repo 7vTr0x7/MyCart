@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const ProductsSection = ({ products }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-body-tertiary py-4 px-5 mx-3">
       <p>
@@ -25,8 +28,10 @@ const ProductsSection = ({ products }) => {
                   />
                   <img
                     className="img-fluid card-img-top"
+                    style={{ cursor: "pointer" }}
                     alt={prod.name}
                     src={`${prod.imageUrl}${prod.name}`}
+                    onClick={() => navigate(`/productDetails/${prod._id}`)}
                   />
                   <small
                     style={{
