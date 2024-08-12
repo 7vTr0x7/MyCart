@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { useLocation } from "react-router-dom";
 import { useFetchProducts } from "../../hooks/useFetchProducts";
 import ProductsSection from "./features/ProductsSection";
 
 const Products = () => {
+  const [allProductsData, setAllProductsData] = useState([]);
+  const [productsData, setProductsData] = useState([]);
+  const [priceRange, setPriceRange] = useState(10);
   const location = useLocation();
   const { category } = location.state || {};
 
   const products = useFetchProducts();
-  const productsData = category
-    ? products?.data?.products.filter(
-        (prod) => prod.categories.category === category
-      )
-    : products?.data?.products;
+
+  useEffect(() => {
+    const productsArray = category
+      ? products?.data?.products.filter(
+          (prod) => prod.categories.category === category
+        )
+      : products?.data?.products;
+
+    setProductsData(productsArray);
+    setAllProductsData(productsArray);
+    productsArray;
+  }, [products, category]);
 
   const categories =
     productsData && productsData.map((prod) => prod.categories.subCategory);
@@ -35,7 +45,9 @@ const Products = () => {
 
   const handlePriceRange = (e) => {
     const price = e.target.value;
-    const filtered = productsData.filter((prod) => prod.price <= price);
+    setPriceRange(price);
+    const filtered = allProductsData.filter((prod) => prod.price <= price);
+    setProductsData(filtered);
   };
 
   return (
@@ -57,13 +69,14 @@ const Products = () => {
                   className="form-range bg-light"
                   type="range"
                   min={10}
-                  max={1000}
+                  max={2000}
                   step={0.5}
+                  value={priceRange}
                   onChange={handlePriceRange}
                 />
                 <div className="d-flex justify-content-between">
                   <label>10</label>
-                  <label>1000</label>
+                  <label>2000</label>
                 </div>
               </div>
               <div className="mt-4">
