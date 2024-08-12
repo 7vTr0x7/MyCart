@@ -7,7 +7,9 @@ import ProductsSection from "./features/ProductsSection";
 const Products = () => {
   const [allProductsData, setAllProductsData] = useState([]);
   const [productsData, setProductsData] = useState([]);
-  const [priceRange, setPriceRange] = useState(10);
+  const [priceRange, setPriceRange] = useState("");
+  const [selectedSubCategory, setSelectedSubCategory] = useState([]);
+
   const location = useLocation();
   const { category } = location.state || {};
 
@@ -26,7 +28,8 @@ const Products = () => {
   }, [products, category]);
 
   const categories =
-    productsData && productsData.map((prod) => prod.categories.subCategory);
+    allProductsData &&
+    allProductsData.map((prod) => prod.categories.subCategory);
 
   const filterSubCategories = () => {
     const filtered = [];
@@ -43,11 +46,42 @@ const Products = () => {
 
   const filteredSubCategories = filterSubCategories();
 
+  const filterProductsHandler = (categories, price) => {
+    let filtered = [];
+
+    if (categories.length == 0) {
+      filtered = allProductsData;
+    } else {
+      filtered = allProductsData.filter((prod) =>
+        categories.includes(prod.categories.subCategory)
+      );
+    }
+
+    if (price) {
+      filtered = filtered.filter((prod) => prod.price < price);
+    }
+
+    setProductsData(filtered);
+  };
+
   const handlePriceRange = (e) => {
     const price = e.target.value;
     setPriceRange(price);
-    const filtered = allProductsData.filter((prod) => prod.price <= price);
-    setProductsData(filtered);
+    filterProductsHandler(selectedSubCategory, price);
+  };
+
+  const categoryChangeHandler = (e) => {
+    const { value, checked } = e.target;
+
+    let updatedCategories = [...selectedSubCategory];
+    if (checked) {
+      updatedCategories.push(value);
+    } else {
+      updatedCategories = updatedCategories.filter((cat) => cat != value);
+    }
+
+    setSelectedSubCategory(updatedCategories);
+    filterProductsHandler(updatedCategories, priceRange);
   };
 
   return (
@@ -71,11 +105,11 @@ const Products = () => {
                   min={10}
                   max={2000}
                   step={0.5}
-                  value={priceRange}
+                  value={priceRange || 10}
                   onChange={handlePriceRange}
                 />
                 <div className="d-flex justify-content-between">
-                  <label>10</label>
+                  <label>{priceRange}</label>
                   <label>2000</label>
                 </div>
               </div>
@@ -87,7 +121,13 @@ const Products = () => {
                     filteredSubCategories.map((cat) => (
                       <div key={cat}>
                         <label htmlFor={cat}>
-                          <input id={cat} type="checkbox" value={cat} /> {cat}
+                          <input
+                            id={cat}
+                            type="checkbox"
+                            value={cat}
+                            onChange={categoryChangeHandler}
+                          />{" "}
+                          {cat}
                         </label>
                       </div>
                     ))}
