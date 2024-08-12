@@ -22,9 +22,9 @@ const Products = () => {
       <main>
         <div className="row ">
           <div className="col-md-3">
-            <FilterSection />
+            <FilterSection products={productsData} />
           </div>
-          <div className="col-md-9">
+          <div className="col-md-9 p-0">
             <ProductsSection products={productsData} />
           </div>
         </div>
