@@ -34,12 +34,12 @@ const ProductsSection = ({ products }) => {
                           : prod.name
                       }`}</b>
                     </p>
-                    <p className="px-0 pt-1 pb-3  m-0">
+                    <p className="px-0 pt-1 pb-2  m-0">
                       <b>${prod.price}</b>
                     </p>
                   </div>
                   <div className="sticky-bottom">
-                    <button className="btn btn-outline-secondary rounded-0 w-100 border-0  fw-bold">
+                    <button className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
                       Add to Cart
                     </button>
                   </div>
