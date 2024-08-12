@@ -28,6 +28,18 @@ const ProductsSection = ({ products }) => {
                     alt={prod.name}
                     src={`${prod.imageUrl}${prod.name}`}
                   />
+                  <small
+                    style={{
+                      position: "absolute",
+                      bottom: "93px", // Position from the bottom
+                      right: "7px", // Position from the left
+                      backgroundColor: "gray",
+                      color: "white",
+                      padding: "4px",
+                      borderRadius: "5px",
+                    }}>
+                    {`${prod.rating}`}
+                  </small>
                 </div>
                 <div className="card-body p-0 text-center">
                   <div>
@@ -38,8 +50,21 @@ const ProductsSection = ({ products }) => {
                           : prod.name
                       }`}</b>
                     </p>
-                    <p className="px-0 pt-1 pb-2  m-0">
-                      <b>${prod.price}</b>
+                    <p>
+                      <span className="px-0 pt-1 mx-2">
+                        <b>${prod.price}</b>
+                      </span>
+                      <small
+                        className=" pt-1 m-0"
+                        style={{ textDecoration: "line-through" }}>
+                        <b>
+                          {prod.discountPercent &&
+                            `$${
+                              prod.price -
+                              (prod.price - prod.discountPercent * 100)
+                            }`}
+                        </b>
+                      </small>
                     </p>
                   </div>
                   <div className="sticky-bottom">
