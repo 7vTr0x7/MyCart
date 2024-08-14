@@ -54,10 +54,9 @@ const ProductDetails = () => {
                         <b>{product.discountPercent}% OFF</b>
                       )}
                     </small>
-                    <p className="card-text">
-                      <small className="text-body-secondary">
-                        Last updated 3 mins ago
-                      </small>
+                    <p className="card-text my-2">
+                      <b>Description:</b>
+                      {product.description}
                     </p>
                   </div>
                 </div>
