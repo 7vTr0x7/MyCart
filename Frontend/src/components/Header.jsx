@@ -4,9 +4,11 @@ import { FaRegHeart } from "react-icons/fa";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <header className="container">
       <div className="row py-3">
@@ -21,7 +23,7 @@ const Header = () => {
           <input type="text" placeholder={"Search"} className="form-control" />
         </div>
         <div className="col-md-4 text-end">
-          <span className="px-3 fs-3">
+          <span onClick={() => navigate("/")} className="px-3 fs-3">
             <IoBagHandleOutline />
           </span>
           <span className="px-3 fs-4">

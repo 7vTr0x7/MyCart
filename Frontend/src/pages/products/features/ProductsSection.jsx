@@ -38,8 +38,8 @@ const ProductsSection = () => {
                   <small
                     style={{
                       position: "absolute",
-                      bottom: "93px", // Position from the bottom
-                      right: "7px", // Position from the left
+                      bottom: "7rem",
+                      right: "10px",
                       backgroundColor: "gray",
                       color: "white",
                       padding: "4px",
