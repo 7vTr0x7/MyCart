@@ -15,12 +15,12 @@ const ProductDetails = () => {
       <Header />
       <main
         className="d-flex align-items-center justify-content-center"
-        style={{ height: "50vh" }}>
+        style={{ height: "60vh" }}>
         <div className="row w-100">
           <div className="col-md-6 mx-auto">
             <div className="card">
               <div className="row ">
-                <div className="col-md-4 w-auto">
+                <div className="col-md-4">
                   <img
                     src={`${product.imageUrl + product.name}`}
                     className="img-fluid h-100 "
@@ -59,14 +59,18 @@ const ProductDetails = () => {
                       <b>Description: </b>
                       {product.description}
                     </p>
+                    <p className="card-text my-2">
+                      <b>Availability: </b>
+                      {product.availability ? "In Stock" : "Out of Stock"}
+                    </p>
 
                     <div className="mb-2 mt-4">
-                      <button className="btn btn-secondary w-100">
+                      <button className="btn btn-secondary w-100 fw-semibold">
                         Add To Cart
                       </button>
                     </div>
                     <div>
-                      <button className="btn btn-info w-100">
+                      <button className="btn btn-info w-100  fw-semibold">
                         Add To Wishlist
                       </button>
                     </div>
