@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { CiHeart } from "react-icons/ci";
-import { FaHeart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const ProductsSection = ({ products }) => {
+const ProductsSection = () => {
+  const products = useSelector((state) => state.products.filteredProducts);
+
   const navigate = useNavigate();
 
   return (
@@ -14,7 +16,7 @@ const ProductsSection = ({ products }) => {
       </p>
 
       <div className="row">
-        {products &&
+        {products.length > 0 &&
           products.map((prod) => (
             <div key={prod._id} className="col-md-3">
               <div className="card rounded-0 mt-3 ">
