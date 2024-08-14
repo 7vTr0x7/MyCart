@@ -59,18 +59,19 @@ const ProductsSection = () => {
                     </p>
                     <p>
                       <span className="px-0 pt-1 mx-2">
-                        <b>${prod.price}</b>
+                        <b>
+                          {prod.discountPercent
+                            ? `$${(
+                                prod.price -
+                                prod.price * (prod.discountPercent / 100)
+                              ).toFixed(2)}`
+                            : `$${prod.price}`}
+                        </b>
                       </span>
                       <small
                         className=" pt-1 m-0"
                         style={{ textDecoration: "line-through" }}>
-                        <b>
-                          {prod.discountPercent &&
-                            `$${
-                              prod.price -
-                              (prod.price - prod.discountPercent * 100)
-                            }`}
-                        </b>
+                        <b>{prod.discountPercent && `$${prod.price}`}</b>
                       </small>
                     </p>
                   </div>
