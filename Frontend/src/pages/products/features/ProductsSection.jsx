@@ -76,9 +76,15 @@ const ProductsSection = () => {
                     </p>
                   </div>
                   <div className="sticky-bottom">
-                    <button className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
-                      Add to Cart
-                    </button>
+                    {prod.availability ? (
+                      <button className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
+                        Add to Cart
+                      </button>
+                    ) : (
+                      <p className="btn btn-info m-0 rounded-0 w-100 border-0  fw-bold">
+                        Out of Stock
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
