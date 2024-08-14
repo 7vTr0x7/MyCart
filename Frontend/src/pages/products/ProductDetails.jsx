@@ -19,12 +19,12 @@ const ProductDetails = () => {
         <div className="row w-100">
           <div className="col-md-6 mx-auto">
             <div className="card">
-              <div className="row h-auto">
+              <div className="row ">
                 <div className="col-md-4 w-auto">
                   <img
                     src={`${product.imageUrl + product.name}`}
-                    className="img-fluid"
-                    style={{ height: "15rem" }}
+                    className="img-fluid h-100 "
+                    style={{ paddingLeft: "15px" }}
                     alt={product.name}
                   />
                 </div>
@@ -54,10 +54,22 @@ const ProductDetails = () => {
                         <b>{product.discountPercent}% OFF</b>
                       )}
                     </small>
+
                     <p className="card-text my-2">
-                      <b>Description:</b>
+                      <b>Description: </b>
                       {product.description}
                     </p>
+
+                    <div className="mb-2 mt-4">
+                      <button className="btn btn-secondary w-100">
+                        Add To Cart
+                      </button>
+                    </div>
+                    <div>
+                      <button className="btn btn-info w-100">
+                        Add To Wishlist
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
