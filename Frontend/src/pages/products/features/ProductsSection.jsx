@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { CiHeart } from "react-icons/ci";
+import { IoMdHeart } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToWishlist } from "../../wishlist/wishlistSlice";
+
+import toast, { Toaster } from "react-hot-toast";
 
 const ProductsSection = () => {
   const dispatch = useDispatch();
@@ -12,6 +15,7 @@ const ProductsSection = () => {
 
   const addToWishlistHandler = (prod) => {
     dispatch(addToWishlist(prod));
+    toast.success("Added to wishlist");
   };
 
   useEffect(() => {
@@ -31,14 +35,25 @@ const ProductsSection = () => {
             <div key={prod._id} className="col-md-3">
               <div className="card rounded-0 mt-3 ">
                 <div>
-                  <CiHeart
-                    onClick={() => addToWishlistHandler(prod)}
-                    className="fs-4 mt-2 mx-2"
-                    style={{
-                      position: "absolute",
-                      right: "0",
-                    }}
-                  />
+                  {wishlist.includes(prod._id) ? (
+                    <IoMdHeart
+                      onClick={() => addToWishlistHandler(prod._id)}
+                      className="fs-4 mt-2 mx-2"
+                      style={{
+                        position: "absolute",
+                        right: "0",
+                      }}
+                    />
+                  ) : (
+                    <CiHeart
+                      onClick={() => addToWishlistHandler(prod._id)}
+                      className="fs-4 mt-2 mx-2"
+                      style={{
+                        position: "absolute",
+                        right: "0",
+                      }}
+                    />
+                  )}
                   <img
                     className="img-fluid card-img-top"
                     style={{ cursor: "pointer" }}
@@ -102,6 +117,7 @@ const ProductsSection = () => {
             </div>
           ))}
       </div>
+      <Toaster />
     </div>
   );
 };
