@@ -17,6 +17,7 @@ const ProductsSection = () => {
   const products = useSelector((state) => state.products.filteredProducts);
   const wishlist = useSelector((state) => state.wishlist.wishlist);
   const productIds = useSelector((state) => state.cart.productIds);
+  const cart = useSelector((state) => state.cart.cart);
 
   const addToWishlistHandler = (id) => {
     dispatch(addToWishlist(id));
@@ -31,11 +32,6 @@ const ProductsSection = () => {
   const addToCartHandler = (prod) => {
     dispatch(addToCart(prod));
     toast.success("Added to Cart");
-  };
-
-  const removeFromCartHandler = (prod) => {
-    dispatch(removeFromCart(prod));
-    toast.success("Removed From Cart");
   };
 
   return (
