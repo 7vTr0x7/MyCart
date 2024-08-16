@@ -2,19 +2,21 @@ import React, { useEffect } from "react";
 import { CiHeart } from "react-icons/ci";
 import { IoMdHeart } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "../../wishlist/wishlistSlice";
 
 import toast, { Toaster } from "react-hot-toast";
+import { addToCart, removeFromCart } from "../../cart/cartSlice";
 
 const ProductsSection = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const products = useSelector((state) => state.products.filteredProducts);
   const wishlist = useSelector((state) => state.wishlist.wishlist);
+  const cart = useSelector((state) => state.cart.cart);
 
   const addToWishlistHandler = (id) => {
     dispatch(addToWishlist(id));
@@ -24,6 +26,16 @@ const ProductsSection = () => {
   const removeFromWishlistHandler = (id) => {
     dispatch(removeFromWishlist(id));
     toast.success("Removed From wishlist");
+  };
+
+  const addToCartHandler = (id) => {
+    dispatch(addToCart(id));
+    toast.success("Added to Cart");
+  };
+
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+    toast.success("Removed From Cart");
   };
 
   return (
@@ -107,9 +119,21 @@ const ProductsSection = () => {
                   </div>
                   <div className="sticky-bottom">
                     {prod.availability ? (
-                      <button className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
-                        Add to Cart
-                      </button>
+                      <>
+                        {cart.includes(prod._id) ? (
+                          <button className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
+                            <Link to="/cart" className="nav-link">
+                              Go to Cart
+                            </Link>
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => addToCartHandler(prod._id)}
+                            className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
+                            Add to Cart
+                          </button>
+                        )}
+                      </>
                     ) : (
                       <p className="btn btn-info m-0 rounded-0 w-100 border-0  fw-bold">
                         Out of Stock

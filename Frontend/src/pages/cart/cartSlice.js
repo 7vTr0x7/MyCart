@@ -4,21 +4,24 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     cart: [],
+    productIds: [],
   },
   reducers: {
     addToCart: (state, action) => {
-      const exists = state.cart.find((id) => id == action.payload);
+      const exists = state.cart.find((prod) => prod._id == action.payload._id);
       if (!exists) {
         return {
           ...state,
           cart: [...state.cart, action.payload],
+          productIds: [...state.productIds, action.payload._id],
         };
       }
     },
     removeFromCart: (state, action) => {
       return {
         ...state,
-        cart: state.cart.filter((id) => id != action.payload),
+        cart: state.cart.filter((prod) => prod._id != action.payload),
+        productIds: state.productIds.filter((id) => id != action.payload),
       };
     },
   },
