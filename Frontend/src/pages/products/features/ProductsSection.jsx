@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CiHeart } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,11 +9,14 @@ const ProductsSection = () => {
   const navigate = useNavigate();
   const products = useSelector((state) => state.products.filteredProducts);
   const wishlist = useSelector((state) => state.wishlist.wishlist);
-  console.log(wishlist);
 
   const addToWishlistHandler = (prod) => {
     dispatch(addToWishlist(prod));
   };
+
+  useEffect(() => {
+    console.log(wishlist);
+  }, [wishlist]);
 
   return (
     <div className="bg-body-tertiary py-4 px-5 mx-3">
