@@ -1,12 +1,17 @@
 import React from "react";
 import { CiHeart } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { addToWishlist } from "../../wishlist/wishlistSlice";
 
 const ProductsSection = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const products = useSelector((state) => state.products.filteredProducts);
 
-  const navigate = useNavigate();
+  const addToWishlistHandler = (prod) => {
+    dispatch(addToWishlist(prod));
+  };
 
   return (
     <div className="bg-body-tertiary py-4 px-5 mx-3">
@@ -22,6 +27,7 @@ const ProductsSection = () => {
               <div className="card rounded-0 mt-3 ">
                 <div>
                   <CiHeart
+                    onClick={() => addToWishlistHandler(prod)}
                     className="fs-4 mt-2 mx-2"
                     style={{
                       position: "absolute",

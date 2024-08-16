@@ -4,7 +4,7 @@ import Home from "./pages/home/Home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Products from "./pages/products/Products";
 import ProductDetails from "./pages/products/ProductDetails";
-import Wishlist from "./pages/whishlist/Wishlist";
+import Wishlist from "./pages/wishlist/Wishlist";
 
 const App = () => {
   return (
