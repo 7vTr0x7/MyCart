@@ -3,7 +3,10 @@ import { CiHeart } from "react-icons/ci";
 import { IoMdHeart } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addToWishlist } from "../../wishlist/wishlistSlice";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../../wishlist/wishlistSlice";
 
 import toast, { Toaster } from "react-hot-toast";
 
@@ -13,9 +16,14 @@ const ProductsSection = () => {
   const products = useSelector((state) => state.products.filteredProducts);
   const wishlist = useSelector((state) => state.wishlist.wishlist);
 
-  const addToWishlistHandler = (prod) => {
-    dispatch(addToWishlist(prod));
+  const addToWishlistHandler = (id) => {
+    dispatch(addToWishlist(id));
     toast.success("Added to wishlist");
+  };
+
+  const removeFromWishlistHandler = (id) => {
+    dispatch(removeFromWishlist(id));
+    toast.success("Removed From wishlist");
   };
 
   useEffect(() => {
@@ -37,7 +45,7 @@ const ProductsSection = () => {
                 <div>
                   {wishlist.includes(prod._id) ? (
                     <IoMdHeart
-                      onClick={() => addToWishlistHandler(prod._id)}
+                      onClick={() => removeFromWishlistHandler(prod._id)}
                       className="fs-4 mt-2 mx-2"
                       style={{
                         position: "absolute",
