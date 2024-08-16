@@ -1,14 +1,28 @@
 import React from "react";
 import Header from "../../components/Header";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { addToWishlist, removeFromWishlist } from "../wishlist/wishlistSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
+  const wishlist = useSelector((state) => state.wishlist.wishlist);
 
   const prodId = useParams();
 
   const product = products.find((prod) => prodId.prodId == prod._id);
+
+  const addToWishlistHandler = (id) => {
+    dispatch(addToWishlist(id));
+    toast.success("Added to wishlist");
+  };
+
+  const removeFromWishlistHandler = (id) => {
+    dispatch(removeFromWishlist(id));
+    toast.success("Removed From wishlist");
+  };
 
   return (
     <>
@@ -70,9 +84,19 @@ const ProductDetails = () => {
                       </button>
                     </div>
                     <div>
-                      <button className="btn btn-info w-100  fw-semibold">
-                        Add To Wishlist
-                      </button>
+                      {wishlist.includes(product._id) ? (
+                        <button
+                          onClick={() => removeFromWishlistHandler(product._id)}
+                          className="btn btn-info w-100  fw-semibold">
+                          Remove from Wishlist
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => addToWishlistHandler(product._id)}
+                          className="btn btn-info w-100  fw-semibold">
+                          Add to Wishlist
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -80,6 +104,7 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+        <Toaster />
       </main>
     </>
   );

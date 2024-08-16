@@ -26,10 +26,6 @@ const ProductsSection = () => {
     toast.success("Removed From wishlist");
   };
 
-  useEffect(() => {
-    console.log(wishlist);
-  }, [wishlist]);
-
   return (
     <div className="bg-body-tertiary py-4 px-5 mx-3">
       <p>
