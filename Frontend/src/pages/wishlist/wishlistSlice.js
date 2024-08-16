@@ -7,10 +7,15 @@ const wishlistSlice = createSlice({
   },
   reducers: {
     addToWishlist: (state, action) => {
-      return {
-        ...state,
-        wishlist: [...state.wishlist, action.payload],
-      };
+      const exists = state.wishlist.find(
+        (prod) => prod.id == action.payload.id
+      );
+      if (!exists) {
+        return {
+          ...state,
+          wishlist: [...state.wishlist, action.payload],
+        };
+      }
     },
     removeFromWishlist: (state, action) => {
       return {
@@ -23,4 +28,4 @@ const wishlistSlice = createSlice({
 
 export const { addToWishlist, removeFromWishlist } = wishlistSlice.actions;
 
-export default wishlistSlice;
+export default wishlistSlice.reducer;

@@ -8,6 +8,8 @@ const ProductsSection = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const products = useSelector((state) => state.products.filteredProducts);
+  const wishlist = useSelector((state) => state.wishlist.wishlist);
+  console.log(wishlist);
 
   const addToWishlistHandler = (prod) => {
     dispatch(addToWishlist(prod));
