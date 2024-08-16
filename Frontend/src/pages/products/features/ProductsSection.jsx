@@ -9,7 +9,7 @@ import {
 } from "../../wishlist/wishlistSlice";
 
 import toast, { Toaster } from "react-hot-toast";
-import { addToCart, removeFromCart } from "../../cart/cartSlice";
+import { addToCart } from "../../cart/cartSlice";
 
 const ProductsSection = () => {
   const dispatch = useDispatch();
@@ -18,6 +18,10 @@ const ProductsSection = () => {
   const wishlist = useSelector((state) => state.wishlist.wishlist);
   const productIds = useSelector((state) => state.cart.productIds);
   const cart = useSelector((state) => state.cart.cart);
+
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
 
   const addToWishlistHandler = (id) => {
     dispatch(addToWishlist(id));
