@@ -26,7 +26,7 @@ const Header = () => {
           <span onClick={() => navigate("/")} className="px-3 fs-3">
             <IoBagHandleOutline />
           </span>
-          <span className="px-3 fs-4">
+          <span onClick={() => navigate("/wishlist")}  className="px-3 fs-4">
             <FaRegHeart />
           </span>
           <span className="px-3 fs-3">
