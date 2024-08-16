@@ -16,7 +16,7 @@ const ProductsSection = () => {
   const navigate = useNavigate();
   const products = useSelector((state) => state.products.filteredProducts);
   const wishlist = useSelector((state) => state.wishlist.wishlist);
-  const cart = useSelector((state) => state.cart.cart);
+  const productIds = useSelector((state) => state.cart.productIds);
 
   const addToWishlistHandler = (id) => {
     dispatch(addToWishlist(id));
@@ -28,13 +28,13 @@ const ProductsSection = () => {
     toast.success("Removed From wishlist");
   };
 
-  const addToCartHandler = (id) => {
-    dispatch(addToCart(id));
+  const addToCartHandler = (prod) => {
+    dispatch(addToCart(prod));
     toast.success("Added to Cart");
   };
 
-  const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id));
+  const removeFromCartHandler = (prod) => {
+    dispatch(removeFromCart(prod));
     toast.success("Removed From Cart");
   };
 
@@ -120,7 +120,7 @@ const ProductsSection = () => {
                   <div className="sticky-bottom">
                     {prod.availability ? (
                       <>
-                        {cart.includes(prod._id) ? (
+                        {productIds.includes(prod._id) ? (
                           <button className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
                             <Link to="/cart" className="nav-link">
                               Go to Cart
@@ -128,7 +128,7 @@ const ProductsSection = () => {
                           </button>
                         ) : (
                           <button
-                            onClick={() => addToCartHandler(prod._id)}
+                            onClick={() => addToCartHandler(prod)}
                             className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
                             Add to Cart
                           </button>
