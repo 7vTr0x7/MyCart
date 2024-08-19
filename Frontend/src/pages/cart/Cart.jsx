@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "../../components/Header";
 import { useSelector } from "react-redux";
-import CartProduct from "./features//CartProduct";
 import Details from "./features/Details";
+import ProductCard from "../../components/ProductCard";
 
 const Cart = () => {
   const cartProducts = useSelector((state) => state.cart.cart);
@@ -18,7 +18,7 @@ const Cart = () => {
             {cartProducts.length > 0 &&
               cartProducts.map((prod) => (
                 <div key={prod._id}>
-                  <CartProduct product={prod} />
+                  <ProductCard product={prod} />
                 </div>
               ))}
           </div>

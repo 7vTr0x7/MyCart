@@ -3,22 +3,29 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addToWishlist,
   removeFromWishlist,
-} from "../../wishlist/wishlistSlice";
-import toast from "react-hot-toast";
+} from "../pages/wishlist/wishlistSlice";
+import toast, { Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { addToCart } from "../pages/cart/cartSlice";
 
-const CartProduct = ({ product }) => {
+const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const wishlistProductIds = useSelector(
     (state) => state.wishlist.wishlistProductIds
   );
+  const productIds = useSelector((state) => state.cart.productIds);
 
-  const addToWishlistHandler = (id) => {
-    dispatch(addToWishlist(id));
+  const addToWishlistHandler = (prod) => {
+    dispatch(addToWishlist(prod));
+    toast.success("Added to wishlist");
+  };
+  const addToCartHandler = (prod) => {
+    dispatch(addToCart(prod));
     toast.success("Added to wishlist");
   };
 
-  const removeFromWishlistHandler = (id) => {
-    dispatch(removeFromWishlist(id));
+  const removeFromWishlistHandler = (prod) => {
+    dispatch(removeFromWishlist(prod));
     toast.success("Removed From wishlist");
   };
 
@@ -71,9 +78,19 @@ const CartProduct = ({ product }) => {
               </p>
 
               <div className="mb-2 mt-4">
-                <button className="btn btn-secondary w-100 fw-semibold">
-                  Add To Cart
-                </button>
+                {productIds.includes(product._id) ? (
+                  <button className="btn btn-secondary w-100  fw-semibold">
+                    <Link to="/cart" className="nav-link">
+                      Go to Cart
+                    </Link>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => addToCartHandler(product)}
+                    className="btn btn-secondary w-100  fw-semibold">
+                    Add to Cart
+                  </button>
+                )}
               </div>
               <div>
                 {wishlistProductIds.includes(product._id) ? (
@@ -93,9 +110,10 @@ const CartProduct = ({ product }) => {
             </div>
           </div>
         </div>
+        <Toaster />
       </div>
     </>
   );
 };
 
-export default CartProduct;
+export default ProductCard;
