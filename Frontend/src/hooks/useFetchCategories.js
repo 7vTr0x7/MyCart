@@ -5,17 +5,12 @@ export const useFetchCategories = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch(
-        "https://my-cart-backend.vercel.app/api/products"
-      );
-      if (!res.ok) {
-        console.error(`HTTP error! status: ${res}`);
-        return;
-      }
+      const res = await fetch("https://newemployee.vercel.app/employees");
+
       const data = await res.json();
       setData(data);
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.log(error);
     }
   };
 
