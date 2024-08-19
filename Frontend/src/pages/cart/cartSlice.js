@@ -36,10 +36,12 @@ const cartSlice = createSlice({
       const index = state.cart.findIndex(
         (prod) => prod._id === action.payload._id
       );
-      state.cart[index] = {
-        ...state.cart[index],
-        quantity: action.payload.quantity,
-      };
+      if (state.cart[index].quantity >= 0) {
+        state.cart[index] = {
+          ...state.cart[index],
+          quantity: action.payload.quantity,
+        };
+      }
     },
   },
 });
