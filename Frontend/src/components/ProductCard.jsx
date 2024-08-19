@@ -6,7 +6,11 @@ import {
 } from "../pages/wishlist/wishlistSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { addToCart, removeFromCart } from "../pages/cart/cartSlice";
+import {
+  addToCart,
+  removeFromCart,
+  updateQuantity,
+} from "../pages/cart/cartSlice";
 
 const ProductCard = ({ product, isCart }) => {
   const dispatch = useDispatch();
@@ -32,6 +36,19 @@ const ProductCard = ({ product, isCart }) => {
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
     toast.success("Removed From wishlist");
+  };
+
+  const handleIncrement = () => {
+    dispatch(
+      updateQuantity({ _id: product._id, quantity: product.quantity + 1 })
+    );
+    toast.success("Increased Quantity");
+  };
+  const handleDecrement = () => {
+    dispatch(
+      updateQuantity({ _id: product._id, quantity: product.quantity - 1 })
+    );
+    toast.success("Decreased Quantity");
   };
 
   return (
@@ -77,10 +94,32 @@ const ProductCard = ({ product, isCart }) => {
                 <b>Description: </b>
                 {product.description}
               </p>
+
               <p className="card-text my-2">
                 <b>Availability: </b>
                 {product.availability ? "In Stock" : "Out of Stock"}
               </p>
+
+              {isCart && (
+                <>
+                  <span className="card-text my-2">
+                    <b>Quantity: </b>
+                    <button
+                      onClick={handleDecrement}
+                      className="mx-3  py-0 btn btn-light fs-5 fw-semibold rounded-circle">
+                      -
+                    </button>
+                    <span className="fs-6 fw-semibold border  border-black m-0 py-0 px-3">
+                      {product.quantity}
+                    </span>
+                    <button
+                      onClick={handleIncrement}
+                      className="mx-3 px-2 py-0 btn btn-light fs-5 fw-semibold rounded-circle">
+                      +
+                    </button>
+                  </span>
+                </>
+              )}
 
               <div className="mb-2 mt-4">
                 {productIds.includes(product._id) ? (
