@@ -1,9 +1,7 @@
 require("dotenv").config({ path: "D:/mycart/backend/.env" });
 const mongoose = require("mongoose");
 
-const mongoUrl =
-  "mongodb+srv://neoGStudent:vTroxGAMING@neog.vf9x0bo.mongodb.net/?retryWrites=true&w=majority&appName=neoG";
-console.log(mongoUrl);
+const mongoUrl = process.env.MONGODB;
 
 const initializeDatabase = async () => {
   try {
