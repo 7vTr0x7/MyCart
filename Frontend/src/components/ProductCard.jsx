@@ -48,7 +48,7 @@ const ProductCard = ({ product, isCart }) => {
       dispatch(decQuantity(product._id));
       toast.success("Decreased Quantity");
     } else {
-      toast.success("Add Quantity");
+      toast.error("Add Quantity");
     }
   };
 

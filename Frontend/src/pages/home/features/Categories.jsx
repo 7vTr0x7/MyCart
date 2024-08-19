@@ -5,7 +5,7 @@ const Categories = ({ categories }) => {
   return (
     <>
       <div className="row text-center">
-        {categories &&
+        {categories ? (
           categories.map((category) => (
             <div key={category.name} className="col-md-3">
               <button className="btn btn-light">
@@ -17,7 +17,10 @@ const Categories = ({ categories }) => {
                 </Link>
               </button>
             </div>
-          ))}
+          ))
+        ) : (
+          <p className="text-center">Loading</p>
+        )}
       </div>
     </>
   );
