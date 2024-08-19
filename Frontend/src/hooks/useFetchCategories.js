@@ -8,6 +8,7 @@ export const useFetchCategories = () => {
       const res = await fetch("https://newemployee.vercel.app/employees");
 
       const data = await res.json();
+      console.log(data);
       setData(data);
     } catch (error) {
       console.log(error);
