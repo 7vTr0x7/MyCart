@@ -7,7 +7,7 @@ const Category = require("./models/category.model");
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: "http://localhost:5173", // allow this specific origin
+  origin: "*", // allow this specific origin
   credentials: true, // allows credentials such as cookies to be sent
   optionsSuccessStatus: 200, // for older browsers compatibility
 };
