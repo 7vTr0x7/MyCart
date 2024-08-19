@@ -5,7 +5,9 @@ export const useFetchCategories = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("http://localhost:4000/api/categories");
+      const res = await fetch(
+        "http://my-cart-backend.vercel.app/api/categories"
+      );
 
       const data = await res.json();
       setData(data);
