@@ -15,13 +15,10 @@ const ProductsSection = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const products = useSelector((state) => state.products.filteredProducts);
-  const wishlist = useSelector((state) => state.wishlist.wishlist);
+  const wishlistProductIds = useSelector(
+    (state) => state.wishlist.wishlistProductIds
+  );
   const productIds = useSelector((state) => state.cart.productIds);
-  const cart = useSelector((state) => state.cart.cart);
-
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
 
   const addToWishlistHandler = (id) => {
     dispatch(addToWishlist(id));
@@ -51,9 +48,9 @@ const ProductsSection = () => {
             <div key={prod._id} className="col-md-3">
               <div className="card rounded-0 mt-3 ">
                 <div>
-                  {wishlist.includes(prod._id) ? (
+                  {wishlistProductIds.includes(prod._id) ? (
                     <IoMdHeart
-                      onClick={() => removeFromWishlistHandler(prod._id)}
+                      onClick={() => removeFromWishlistHandler(prod)}
                       className="fs-4 mt-2 mx-2"
                       style={{
                         position: "absolute",
@@ -62,7 +59,7 @@ const ProductsSection = () => {
                     />
                   ) : (
                     <CiHeart
-                      onClick={() => addToWishlistHandler(prod._id)}
+                      onClick={() => addToWishlistHandler(prod)}
                       className="fs-4 mt-2 mx-2"
                       style={{
                         position: "absolute",

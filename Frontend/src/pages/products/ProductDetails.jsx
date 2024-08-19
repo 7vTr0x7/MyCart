@@ -9,6 +9,9 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const wishlist = useSelector((state) => state.wishlist.wishlist);
+  const wishlistProductIds = useSelector(
+    (state) => state.wishlist.wishlistProductIds
+  );
 
   const prodId = useParams();
 
@@ -84,15 +87,15 @@ const ProductDetails = () => {
                       </button>
                     </div>
                     <div>
-                      {wishlist.includes(product._id) ? (
+                      {wishlistProductIds.includes(product._id) ? (
                         <button
-                          onClick={() => removeFromWishlistHandler(product._id)}
+                          onClick={() => removeFromWishlistHandler(product)}
                           className="btn btn-info w-100  fw-semibold">
                           Remove from Wishlist
                         </button>
                       ) : (
                         <button
-                          onClick={() => addToWishlistHandler(product._id)}
+                          onClick={() => addToWishlistHandler(product)}
                           className="btn btn-info w-100  fw-semibold">
                           Add to Wishlist
                         </button>
