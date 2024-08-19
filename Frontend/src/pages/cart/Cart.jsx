@@ -6,6 +6,7 @@ import Details from "./features/Details";
 
 const Cart = () => {
   const cartProducts = useSelector((state) => state.cart.cart);
+  console.log(cartProducts);
 
   return (
     <>
