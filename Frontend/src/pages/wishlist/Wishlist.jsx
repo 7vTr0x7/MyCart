@@ -4,12 +4,19 @@ import { useSelector } from "react-redux";
 
 const Wishlist = () => {
   const wishlist = useSelector((state) => state.wishlist.wishlist);
-  console.log(wishlist);
 
   return (
     <>
       <Header />
-      <main></main>
+      <main className="container my-4">
+        <div className="row">
+          {wishlist.map((prod) => (
+            <div key={prod._id} className="col-md-3">
+              <div className="card"></div>
+            </div>
+          ))}
+        </div>
+      </main>
     </>
   );
 };
