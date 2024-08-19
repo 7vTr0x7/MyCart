@@ -19,7 +19,9 @@ const Categories = ({ categories }) => {
             </div>
           ))
         ) : (
-          <p className="text-center">Loading</p>
+          <p className="container text-center col-md-1 btn btn-light">
+            Loading
+          </p>
         )}
       </div>
     </>
