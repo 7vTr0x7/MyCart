@@ -6,9 +6,9 @@ import {
 } from "../pages/wishlist/wishlistSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { addToCart } from "../pages/cart/cartSlice";
+import { addToCart, removeFromCart } from "../pages/cart/cartSlice";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, isCart }) => {
   const dispatch = useDispatch();
   const wishlistProductIds = useSelector(
     (state) => state.wishlist.wishlistProductIds
@@ -26,6 +26,11 @@ const ProductCard = ({ product }) => {
 
   const removeFromWishlistHandler = (prod) => {
     dispatch(removeFromWishlist(prod));
+    toast.success("Removed From wishlist");
+  };
+
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
     toast.success("Removed From wishlist");
   };
 
@@ -79,11 +84,21 @@ const ProductCard = ({ product }) => {
 
               <div className="mb-2 mt-4">
                 {productIds.includes(product._id) ? (
-                  <button className="btn btn-secondary w-100  fw-semibold">
-                    <Link to="/cart" className="nav-link">
-                      Go to Cart
-                    </Link>
-                  </button>
+                  <>
+                    {isCart ? (
+                      <button
+                        onClick={() => removeFromCartHandler(product._id)}
+                        className="btn btn-secondary w-100  fw-semibold">
+                        Remove from Cart
+                      </button>
+                    ) : (
+                      <button className="btn btn-secondary w-100  fw-semibold">
+                        <Link to="/cart" className="nav-link">
+                          Go to Cart
+                        </Link>
+                      </button>
+                    )}
+                  </>
                 ) : (
                   <button
                     onClick={() => addToCartHandler(product)}

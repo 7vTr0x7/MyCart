@@ -18,7 +18,7 @@ const Cart = () => {
             {cartProducts.length > 0 &&
               cartProducts.map((prod) => (
                 <div key={prod._id}>
-                  <ProductCard product={prod} />
+                  <ProductCard product={prod} isCart={true} />
                 </div>
               ))}
           </div>
