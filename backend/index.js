@@ -7,13 +7,12 @@ const Category = require("./models/category.model");
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: "*", // allow this specific origin
+  origin: "https://my-cart-frontend.vercel.app", // allow this specific origin
   credentials: true, // allows credentials such as cookies to be sent
   optionsSuccessStatus: 200, // for older browsers compatibility
 };
 
 app.use(cors(corsOptions));
-app.use(cors({ origin: "*" }));
 
 initializeDatabase();
 
