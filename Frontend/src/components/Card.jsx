@@ -128,7 +128,6 @@ const Card = ({ prod }) => {
           )}
         </div>
       </div>
-      <Toaster />
     </>
   );
 };
