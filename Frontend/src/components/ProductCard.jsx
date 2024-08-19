@@ -1,16 +1,17 @@
 import React from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import {
+  addToCart,
+  decQuantity,
+  incQuantity,
+  removeFromCart,
+} from "../pages/cart/cartSlice";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "../pages/wishlist/wishlistSlice";
-import toast, { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
-import {
-  addToCart,
-  removeFromCart,
-  updateQuantity,
-} from "../pages/cart/cartSlice";
 
 const ProductCard = ({ product, isCart }) => {
   const dispatch = useDispatch();
@@ -39,20 +40,15 @@ const ProductCard = ({ product, isCart }) => {
   };
 
   const handleIncrement = () => {
-    dispatch(
-      updateQuantity({ _id: product._id, quantity: product.quantity + 1 })
-    );
+    dispatch(incQuantity(product._id));
     toast.success("Increased Quantity");
   };
-  console.log(product.quantity);
   const handleDecrement = () => {
-    if (product.quantity < 0 || product.quantity == -1) {
-      toast.success("0 Quantity");
-    } else {
-      dispatch(
-        updateQuantity({ _id: product._id, quantity: product.quantity - 1 })
-      );
+    if (product.quantity > 1) {
+      dispatch(decQuantity(product._id));
       toast.success("Decreased Quantity");
+    } else {
+      toast.success("Add Quantity");
     }
   };
 

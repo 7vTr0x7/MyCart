@@ -6,7 +6,6 @@ import ProductCard from "../../components/ProductCard";
 
 const Cart = () => {
   const cartProducts = useSelector((state) => state.cart.cart);
-  console.log(cartProducts);
 
   return (
     <>
