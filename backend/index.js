@@ -7,6 +7,15 @@ const Category = require("./models/category.model");
 const app = express();
 app.use(express.json());
 
+const corsOptions = {
+  origin: ["http://localhost:5173", "https://my-cart-backend.vercel.app"], // Add your frontend URL and other allowed origins
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+};
+
+app.use(cors(corsOptions));
+
 initializeDatabase();
 
 const readProducts = async () => {
