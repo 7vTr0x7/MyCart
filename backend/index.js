@@ -157,6 +157,33 @@ app.post("/api/products/multiple", async (req, res) => {
   }
 });
 
+const readCart = async (data) => {
+  try {
+    const products = [];
+    for (let i = 0; i < data.length; i++) {
+      const product = await Product.findById(data[i]);
+      products.push(product);
+    }
+
+    return products;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("/api/cart/products", async (req, res) => {
+  try {
+    const products = await readCart(req.body);
+    if (products.length !== 0) {
+      res.json(products);
+    } else {
+      res.status(404).json({ error: "Products not Found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to read products : ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
