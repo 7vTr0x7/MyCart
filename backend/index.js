@@ -7,15 +7,6 @@ const Category = require("./models/category.model");
 const app = express();
 app.use(express.json());
 
-const corsOptions = {
-  origin: "http://localhost:5173",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
-
 initializeDatabase();
 
 const readProducts = async () => {
