@@ -44,11 +44,16 @@ const ProductCard = ({ product, isCart }) => {
     );
     toast.success("Increased Quantity");
   };
+  console.log(product.quantity);
   const handleDecrement = () => {
-    dispatch(
-      updateQuantity({ _id: product._id, quantity: product.quantity - 1 })
-    );
-    toast.success("Decreased Quantity");
+    if (product.quantity < 0 || product.quantity == -1) {
+      toast.success("0 Quantity");
+    } else {
+      dispatch(
+        updateQuantity({ _id: product._id, quantity: product.quantity - 1 })
+      );
+      toast.success("Decreased Quantity");
+    }
   };
 
   return (
