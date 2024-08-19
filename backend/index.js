@@ -153,12 +153,13 @@ app.post("/api/products/multiple", async (req, res) => {
 
 const readCart = async (data) => {
   try {
-    const products = [];
-    for (let i = 0; i < data.length; i++) {
-      const product = await Product.findById(data[i]);
-      products.push(product);
-    }
-
+    const products = await Promise.all(
+      Product.find(
+        data.forEach((id) => ({
+          _id: id,
+        }))
+      )
+    );
     return products;
   } catch (error) {
     console.log(error);
