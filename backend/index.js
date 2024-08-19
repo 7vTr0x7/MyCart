@@ -6,7 +6,13 @@ const Category = require("./models/category.model");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 initializeDatabase();
 
@@ -153,13 +159,12 @@ app.post("/api/products/multiple", async (req, res) => {
 
 const readCart = async (data) => {
   try {
-    const products = await Promise.all(
-      Product.find(
-        data.forEach((id) => ({
-          _id: id,
-        }))
-      )
-    );
+    const products = [];
+    for (let i = 0; i < data.length; i++) {
+      const product = await Product.findById(data[i]);
+      products.push(product);
+    }
+
     return products;
   } catch (error) {
     console.log(error);
