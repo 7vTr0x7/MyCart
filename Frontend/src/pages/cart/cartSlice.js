@@ -32,18 +32,13 @@ const cartSlice = createSlice({
         productIds: state.productIds.filter((id) => id != action.payload),
       };
     },
-    increaseQuantity: (state, action) => {
-      const index = state.cart.findIndex((prod) => prod._id === action.payload);
+    updateQuantity: (state, action) => {
+      const index = state.cart.findIndex(
+        (prod) => prod._id === action.payload._id
+      );
       state.cart[index] = {
         ...state.cart[index],
-        quantity: state.cart[index].quantity + 1,
-      };
-    },
-    decreaseQuantity: (state, action) => {
-      const index = state.cart.findIndex((prod) => prod._id === action.payload);
-      state.cart[index] = {
-        ...state.cart[index],
-        quantity: state.cart[index].quantity - 1,
+        quantity: action.payload.quantity,
       };
     },
   },
