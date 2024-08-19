@@ -6,14 +6,7 @@ export const useFetchCategories = () => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        "https://my-cart-backend.vercel.app/api/categories",
-        {
-          method: "GET",
-          credentials: "include", // or "same-origin"
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        "https://my-cart-backend.vercel.app/api/categories"
       );
 
       const data = await res.json();

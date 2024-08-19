@@ -6,14 +6,7 @@ export const useFetchProducts = () => {
   const fetchProducts = async () => {
     try {
       const res = await fetch(
-        "https://my-cart-backend.vercel.app/api/products",
-        {
-          method: "GET",
-          credentials: "include", // or "same-origin"
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        "https://my-cart-backend.vercel.app/api/products"
       );
       if (!res.ok) {
         console.log("failed to get products");
