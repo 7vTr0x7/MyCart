@@ -9,12 +9,13 @@ export const useFetchCategories = () => {
         "https://my-cart-backend.vercel.app/api/categories"
       );
       if (!res.ok) {
-        console.log("failed to get products");
+        console.error(`HTTP error! status: ${res}`);
+        return;
       }
       const data = await res.json();
       setData(data);
     } catch (error) {
-      console.log(error);
+      console.error("Fetch error:", error);
     }
   };
 
