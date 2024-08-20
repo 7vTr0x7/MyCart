@@ -17,6 +17,16 @@ const addressSlice = createSlice({
       },
     ],
   },
+  reducers: {
+    addAddress: (state, action) => {
+      return {
+        ...state,
+        addresses: [...state.addresses, action.payload],
+      };
+    },
+  },
 });
+
+export const { addAddress } = addressSlice.actions;
 
 export default addressSlice.reducer;

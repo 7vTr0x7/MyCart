@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import AddressForm from "./AddressForm";
+import { Toaster } from "react-hot-toast";
 
 const ProfileDetails = () => {
   const [toggle, setToggle] = useState(false);
@@ -89,6 +90,7 @@ const ProfileDetails = () => {
             <AddressForm setToggleForm={setToggleForm} />
           )}
         </div>
+        <Toaster />
       </main>
     </>
   );
