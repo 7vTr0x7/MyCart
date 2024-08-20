@@ -3,6 +3,7 @@ const cors = require("cors");
 const { initializeDatabase } = require("./db/db.connect");
 const Product = require("./models/product.model");
 const Category = require("./models/category.model");
+const Users = require("./models/user.model");
 
 const app = express();
 app.use(express.json());
@@ -181,6 +182,28 @@ app.get("/api/cart/products", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: `Failed to read products : ${error}` });
+  }
+});
+
+const readUsers = async () => {
+  try {
+    const users = await Users.find();
+    return users;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("api/users", async (req, res) => {
+  try {
+    const users = await readUsers();
+    if (users.length > 0) {
+      res.json(users);
+    } else {
+      res.status(404).json({ error: `Users not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to get users ${error}` });
   }
 });
 
