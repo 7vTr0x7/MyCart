@@ -11,7 +11,7 @@ const store = configureStore({
     wishlist: wishlistReducer,
     cart: cartReducer,
     profile: profileReducer,
-    address: addressReducer,
+    addresses: addressReducer,
   },
 });
 
