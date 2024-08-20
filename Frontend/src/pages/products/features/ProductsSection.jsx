@@ -10,8 +10,15 @@ const ProductsSection = () => {
   return (
     <div className="bg-body-tertiary py-4 px-5 mx-3">
       <p>
-        <b>Showing All Products</b> ( showing {products && products.length}{" "}
-        products )
+        {products.length > 0 ? (
+          <>
+            <b>Showing All Products</b>
+            {`( showing ${products && products.length}
+            products )`}
+          </>
+        ) : (
+          <b>Loading . . .</b>
+        )}
       </p>
 
       <div className="row">

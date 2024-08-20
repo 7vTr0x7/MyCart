@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../../components/Header";
 import { useSelector } from "react-redux";
-import Details from "./features/Details";
+import Header from "../../components/Header";
 import ProductCard from "../../components/ProductCard";
+import PriceDetails from "./features/PriceDetails";
 
 const Cart = () => {
   const cartProducts = useSelector((state) => state.cart.cart);
@@ -22,7 +22,7 @@ const Cart = () => {
               ))}
           </div>
           <div className="col-md-5">
-            <Details products={cartProducts} />
+            <PriceDetails products={cartProducts} />
           </div>
         </div>
       </main>
