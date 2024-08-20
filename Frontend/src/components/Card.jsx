@@ -108,7 +108,7 @@ const Card = ({ prod }) => {
           {prod.availability ? (
             <>
               {productIds.includes(prod._id) ? (
-                <button className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
+                <button className="btn btn-light border border-top rounded-0 w-100 border-0  fw-bold">
                   <Link to="/cart" className="nav-link">
                     Go to Cart
                   </Link>
@@ -116,13 +116,13 @@ const Card = ({ prod }) => {
               ) : (
                 <button
                   onClick={() => addToCartHandler(prod)}
-                  className="btn btn-secondary rounded-0 w-100 border-0  fw-bold">
+                  className="btn btn-light border border-top rounded-0 w-100 border-0  fw-bold">
                   Add to Cart
                 </button>
               )}
             </>
           ) : (
-            <p className="btn btn-info m-0 rounded-0 w-100 border-0  fw-bold">
+            <p className="btn btn-light border border-top m-0 rounded-0 w-100 border-0  fw-bold">
               Out of Stock
             </p>
           )}

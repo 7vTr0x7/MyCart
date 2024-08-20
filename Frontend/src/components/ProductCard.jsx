@@ -128,11 +128,11 @@ const ProductCard = ({ product, isCart }) => {
                     {isCart ? (
                       <button
                         onClick={() => removeFromCartHandler(product._id)}
-                        className="btn btn-secondary w-100  fw-semibold">
+                        className="btn btn-light w-100  fw-semibold">
                         Remove from Cart
                       </button>
                     ) : (
-                      <button className="btn btn-secondary w-100  fw-semibold">
+                      <button className="btn btn-light w-100  fw-semibold">
                         <Link to="/cart" className="nav-link">
                           Go to Cart
                         </Link>
@@ -142,7 +142,7 @@ const ProductCard = ({ product, isCart }) => {
                 ) : (
                   <button
                     onClick={() => addToCartHandler(product)}
-                    className="btn btn-secondary w-100  fw-semibold">
+                    className="btn btn-light w-100  fw-semibold">
                     Add to Cart
                   </button>
                 )}
@@ -151,13 +151,13 @@ const ProductCard = ({ product, isCart }) => {
                 {wishlistProductIds.includes(product._id) ? (
                   <button
                     onClick={() => removeFromWishlistHandler(product)}
-                    className="btn btn-info w-100  fw-semibold">
+                    className="btn btn-light w-100  fw-semibold">
                     Remove from Wishlist
                   </button>
                 ) : (
                   <button
                     onClick={() => addToWishlistHandler(product)}
-                    className="btn btn-info w-100  fw-semibold">
+                    className="btn btn-light w-100  fw-semibold">
                     Add to Wishlist
                   </button>
                 )}

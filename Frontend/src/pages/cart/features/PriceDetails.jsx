@@ -62,10 +62,10 @@ const PriceDetails = ({ products }) => {
           <hr />
 
           <p className="fs-6 fw-semibold">
-            You Will Save ${discountAmount.toFixed(2)} on This Purchase
+            You Will Save ${discountAmount.toFixed(2)} on This Order
           </p>
 
-          <button className="btn btn-primary w-100 ">Place Order</button>
+          <button className="btn btn-light fw-bold w-100 ">Place Order</button>
         </div>
       )}
     </>
