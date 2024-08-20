@@ -32,7 +32,7 @@ const Header = () => {
           <span onClick={() => navigate("/cart")} className="px-3 fs-3">
             <MdOutlineShoppingCart />
           </span>
-          <span className="px-3 fs-3">
+          <span onClick={() => navigate("/profile")} className="px-3 fs-3">
             <CgProfile />
           </span>
         </div>
