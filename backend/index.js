@@ -207,6 +207,29 @@ app.get("api/users", async (req, res) => {
   }
 });
 
+const addUser = async (userData) => {
+  try {
+    const newUser = new Users(userData);
+    const savedUser = await newUser.save();
+    return savedUser;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.post("/api/users", async (req, res) => {
+  try {
+    const user = await addUser(req.body);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: `User not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to save user ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
