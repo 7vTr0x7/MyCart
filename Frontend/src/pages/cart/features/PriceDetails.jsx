@@ -55,8 +55,7 @@ const PriceDetails = ({ products }) => {
           <div className="d-flex justify-content-between mb-1">
             <span className=" fw-bold fs-6 m-0">Total Amount</span>
             <span className="fs-6 fw-semibold m-0">
-              $
-              {`${(productPrice + discountAmount + deliveryCharge).toFixed(2)}`}
+              ${`${(productPrice + deliveryCharge).toFixed(2)}`}
             </span>
           </div>
           <hr />
