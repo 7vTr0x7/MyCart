@@ -12,6 +12,10 @@ const Cart = () => {
       <Header />
       <main className="container my-4">
         <p className="text-center fw-bold fs-4">My Cart</p>
+        {cartProducts.length === 0 && (
+          <p className="text-center fw-bold fs-6">Cart is Empty</p>
+        )}
+
         <div className="row my-4">
           <div className="col-md-7">
             {cartProducts.length > 0 &&
