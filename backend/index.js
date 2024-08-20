@@ -4,6 +4,7 @@ const { initializeDatabase } = require("./db/db.connect");
 const Product = require("./models/product.model");
 const Category = require("./models/category.model");
 const Users = require("./models/user.model");
+const Addresses = require("./models/address.model");
 
 const app = express();
 app.use(express.json());
@@ -249,6 +250,28 @@ app.get("/api/users/user/:email", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: `Failed to get user ${error}` });
+  }
+});
+
+const readUserAddress = async () => {
+  try {
+    const addresses = await Addresses.find();
+    return addresses;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("/api/users/user/userId/address", async (req, res) => {
+  try {
+    const addresses = await readUserAddress();
+    if (addresses.length > 0) {
+      res.json(addresses);
+    } else {
+      res.status(404).json({ error: `Address not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to get address ${error}` });
   }
 });
 
