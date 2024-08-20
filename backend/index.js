@@ -275,6 +275,29 @@ app.get("/api/users/user/userId/address", async (req, res) => {
   }
 });
 
+const addUserAddress = async (data) => {
+  try {
+    const newAddress = new Addresses(data);
+    const savedAddress = await newAddress.save();
+    return savedAddress;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.post("/api/users/user/userId/address", async (req, res) => {
+  try {
+    const address = await addUserAddress(req.body);
+    if (address) {
+      res.json(address);
+    } else {
+      res.status(404).json({ error: `Address not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to add address ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
