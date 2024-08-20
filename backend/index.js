@@ -230,6 +230,28 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
+const readUserByEmail = async (email) => {
+  try {
+    const user = await Users.findOne({ email: email });
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("/api/users/user/:email", async (req, res) => {
+  try {
+    const user = await readUserByEmail(req.params);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: `User not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to get user ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
