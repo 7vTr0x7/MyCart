@@ -242,7 +242,7 @@ const readUserByEmail = async (email) => {
 
 app.get("/api/users/user/:email", async (req, res) => {
   try {
-    const user = await readUserByEmail(req.params);
+    const user = await readUserByEmail(req.params.email);
     if (user) {
       res.json(user);
     } else {
@@ -253,9 +253,9 @@ app.get("/api/users/user/:email", async (req, res) => {
   }
 });
 
-const readUserAddress = async () => {
+const readUserAddress = async (userId) => {
   try {
-    const addresses = await Addresses.find();
+    const addresses = await Addresses.find({ userId: userId });
     return addresses;
   } catch (error) {
     console.log(error);
@@ -264,7 +264,7 @@ const readUserAddress = async () => {
 
 app.get("/api/users/user/:userId/address", async (req, res) => {
   try {
-    const addresses = await readUserAddress();
+    const addresses = await readUserAddress(req.params.userId);
     if (addresses.length > 0) {
       res.json(addresses);
     } else {
