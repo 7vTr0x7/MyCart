@@ -262,7 +262,7 @@ const readUserAddress = async () => {
   }
 };
 
-app.get("/api/users/user/userId/address", async (req, res) => {
+app.get("/api/users/user/:userId/address", async (req, res) => {
   try {
     const addresses = await readUserAddress();
     if (addresses.length > 0) {
@@ -285,7 +285,7 @@ const addUserAddress = async (data) => {
   }
 };
 
-app.post("/api/users/user/userId/address", async (req, res) => {
+app.post("/api/users/user/:userId/address", async (req, res) => {
   try {
     const address = await addUserAddress(req.body);
     if (address) {
