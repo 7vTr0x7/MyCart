@@ -37,7 +37,9 @@ export const loginUser = createAsyncThunk(
 export const signUpUser = createAsyncThunk("SignUp/user", async (newUser) => {
   try {
     const usersData = await users();
-    const exists = await usersData.find((user) => user.email == newUser.email);
+    const exists =
+      usersData.length > 0 &&
+      usersData.find((user) => user.email == newUser.email);
     if (exists) {
       const res = {
         rejected: true,

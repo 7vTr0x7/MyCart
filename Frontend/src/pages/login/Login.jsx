@@ -27,6 +27,8 @@ const Login = () => {
 
     dispatch(signUpUser(newUser));
     if (error !== null && error !== "") {
+      toast.error("Sign up Successfully");
+
       navigate("/profile");
     }
   };
@@ -34,6 +36,8 @@ const Login = () => {
   const loginHandler = () => {
     dispatch(loginUser({ email, pass }));
     if (error !== null && error !== "") {
+      toast.error("Login Successfully");
+
       navigate("/profile");
     }
   };
