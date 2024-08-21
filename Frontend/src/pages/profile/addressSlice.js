@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react";
 
 const addressSlice = createSlice({
   name: "addresses",
@@ -24,9 +25,15 @@ const addressSlice = createSlice({
         addresses: [...state.addresses, action.payload],
       };
     },
+    editAddress: (state, action) => {
+      const index = state.addresses.findIndex(
+        (addr) => addr.userId == action.payload.id
+      );
+      state.addresses[index] = action.payload.newAddress;
+    },
   },
 });
 
-export const { addAddress } = addressSlice.actions;
+export const { addAddress, editAddress } = addressSlice.actions;
 
 export default addressSlice.reducer;

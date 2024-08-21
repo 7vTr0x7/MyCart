@@ -79,6 +79,14 @@ const ProfileDetails = () => {
                         <p className="fs-6 fw-semibold my-1">
                           {` Contact: ${address.mobileNumber}`}
                         </p>
+                        <div className="my-3">
+                          <button className="btn btn-light fs-6 fw-semibold">
+                            Edit
+                          </button>
+                          <button className="btn btn-light fs-6 fw-semibold mx-3">
+                            Delete
+                          </button>
+                        </div>
                         <hr />
                       </div>
                     ))}

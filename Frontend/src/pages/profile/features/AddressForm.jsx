@@ -64,7 +64,7 @@ const AddressForm = ({ setToggleForm }) => {
 
   return (
     <div className="px-3 py-2 rounded-0 border " style={{ width: "30rem" }}>
-      <p className="fw-bold fs-5 text-center my-3">Add new Address</p>
+      <p className="fw-bold fs-5 text-center my-3">Address Management</p>
       <form>
         <input
           className="form-control"
