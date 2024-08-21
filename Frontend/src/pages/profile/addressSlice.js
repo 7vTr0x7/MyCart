@@ -27,7 +27,7 @@ const addressSlice = createSlice({
     },
     editAddress: (state, action) => {
       const index = state.addresses.findIndex(
-        (addr) => addr.userId == action.payload.id
+        (addr) => addr._id == action.payload.id
       );
       state.addresses[index] = action.payload.newAddress;
     },
@@ -35,7 +35,7 @@ const addressSlice = createSlice({
       return {
         ...state,
         addresses: state.addresses.filter(
-          (address) => address.userId != action.payload
+          (address) => address._id != action.payload
         ),
       };
     },
