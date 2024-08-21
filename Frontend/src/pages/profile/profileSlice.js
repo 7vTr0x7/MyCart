@@ -1,12 +1,50 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axios } from "axios";
+import axios from "axios";
 
 export const loginUser = createAsyncThunk("Login/user", async (email) => {
   try {
     const res = await axios.get(
-      `https://mycartbackend.vercel.app//api/users/user/${email}`
+      `https://mycartbackend.vercel.app/api/users/user/${email}`
     );
-    return res;
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+export const users = async () => {
+  try {
+    const res = await fetch(`https://mycartbackend.vercel.app/api/users`);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const signUpUser = createAsyncThunk("SignUp/user", async (newUser) => {
+  try {
+    const usersData = await users();
+    const exists = await usersData.find((user) => user.email == newUser.email);
+    if (exists) {
+      const res = {
+        rejected: true,
+        message: "Already have account please login",
+      };
+
+      return res;
+    } else {
+      const res = await axios.post(
+        "https://mycartbackend.vercel.app/api/users",
+        newUser,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return res.data;
+    }
   } catch (error) {
     console.log(error);
   }
@@ -36,7 +74,22 @@ const profileSlice = createSlice({
     });
     builder.addCase(loginUser.rejected, (state, action) => {
       state.status = "Error";
-      state.error = action.payload?.message;
+      state.error = "Failed to login";
+    });
+    builder.addCase(signUpUser.pending, (state, action) => {
+      state.status = "Loading";
+    });
+    builder.addCase(signUpUser.fulfilled, (state, action) => {
+      state.status = "Success";
+      if (action.payload.rejected) {
+        state.error = action.payload.message;
+      } else {
+        state.profile = action.payload;
+      }
+    });
+    builder.addCase(signUpUser.rejected, (state, action) => {
+      state.status = "Error";
+      state.error = "Failed to Sign up";
     });
   },
 });

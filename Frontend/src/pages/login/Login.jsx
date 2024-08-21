@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUser, users } from "../profile/profileSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
@@ -7,6 +10,29 @@ const Login = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+
+  const dispatch = useDispatch();
+
+  const { profile, status, error } = useSelector((state) => state.profile);
+  console.log(profile);
+
+  const createAccountHandler = () => {
+    const newUser = {
+      firstName,
+      lastName,
+      email,
+      password: pass,
+    };
+
+    dispatch(signUpUser(newUser));
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      console.log(error);
+    }
+  }, [error]);
 
   return (
     <>
@@ -60,7 +86,11 @@ const Login = () => {
               <button className="btn btn-light ">Login as Guest</button>
             </div>
           ) : (
-            <button className="btn btn-light my-4 ">Create new Account</button>
+            <button
+              className="btn btn-light my-4"
+              onClick={createAccountHandler}>
+              Create new Account
+            </button>
           )}
           <p className="fs-6 fw-semibold">
             {isLoginForm ? " Don't have account? " : " Already have account? "}
@@ -71,6 +101,7 @@ const Login = () => {
             </span>
           </p>
         </div>
+        <Toaster />
       </main>
     </>
   );
