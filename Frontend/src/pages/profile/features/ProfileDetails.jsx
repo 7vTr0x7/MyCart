@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddressForm from "./AddressForm";
 import toast, { Toaster } from "react-hot-toast";
 import { deleteAddress } from "../addressSlice";
+import { Link } from "react-router-dom";
 
 const ProfileDetails = () => {
   const [toggle, setToggle] = useState(false);
@@ -76,7 +77,16 @@ const ProfileDetails = () => {
                     <p className="fs-6 fw-semibold my-3">
                       Name: {user.firstName + user.lastName}
                     </p>
-                    <p className="fs-6 fw-semibold my-3">Email: {user.email}</p>
+                    <div className="d-flex justify-content-between mt-3">
+                      <span className="fs-6 fw-semibold ">
+                        Email: {user.email}
+                      </span>
+                      <button className="btn btn-light fs-6 fw-semibold">
+                        <Link className="nav-link" to="/login">
+                          Log Out
+                        </Link>
+                      </button>
+                    </div>
                   </>
                 ) : (
                   <>
