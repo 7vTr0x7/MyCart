@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AddressForm from "./AddressForm";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { deleteAddress } from "../addressSlice";
 
 const ProfileDetails = () => {
   const [toggle, setToggle] = useState(false);
@@ -9,13 +10,20 @@ const ProfileDetails = () => {
   const [toggleEditForm, setToggleEditForm] = useState(false);
   const [id, setId] = useState("");
 
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.profile.profile);
   const addresses = useSelector((state) => state.addresses.addresses);
 
-  const editAddressHandler = (userId) => {
+  const editAddressHandler = (_id) => {
     setToggleEditForm(true);
     setToggleForm(true);
-    setId(userId);
+    setId(_id);
+  };
+
+  const deleteAddressHandler = (_id) => {
+    dispatch(deleteAddress(_id));
+    toast.success("Address Deleted");
   };
 
   return (
@@ -73,7 +81,7 @@ const ProfileDetails = () => {
                 ) : (
                   <>
                     {addresses.map((address) => (
-                      <div key={address.userId}>
+                      <div key={address._id}>
                         <p className="fs-5 fw-semibold m-0">{address.name}</p>
                         <p className="fs-6 fw-semibold my-1">
                           {`${address.houseNo}, ${address.street}`}
@@ -89,11 +97,13 @@ const ProfileDetails = () => {
                         </p>
                         <div className="my-3">
                           <button
-                            onClick={() => editAddressHandler(address.userId)}
+                            onClick={() => editAddressHandler(address._id)}
                             className="btn btn-light fs-6 fw-semibold">
                             Edit
                           </button>
-                          <button className="btn btn-light fs-6 fw-semibold mx-3">
+                          <button
+                            onClick={() => deleteAddressHandler(address._id)}
+                            className="btn btn-light fs-6 fw-semibold mx-3">
                             Delete
                           </button>
                         </div>

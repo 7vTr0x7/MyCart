@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
 
 const addressSlice = createSlice({
   name: "addresses",
@@ -7,6 +6,7 @@ const addressSlice = createSlice({
     addresses: [
       {
         name: "John Doe",
+        _id: "1",
         userId: "1",
         houseNo: "123A",
         street: "Elm Street",

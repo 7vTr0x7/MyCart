@@ -4,6 +4,7 @@ const profileSlice = createSlice({
   name: "profile",
   initialState: {
     profile: {
+      userId: "1",
       firstName: "Non",
       lastName: "Non",
       email: "non@gmail.com",
