@@ -49,10 +49,10 @@ const AddressForm = ({
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const id = Math.floor(Math.random() * 100).toString();
+    const userId = id ? id : Math.floor(Math.random() * 100).toString();
     const newAddress = {
       name,
-      userId: id,
+      userId: userId,
       houseNo,
       street,
       city,
@@ -63,11 +63,11 @@ const AddressForm = ({
     };
 
     if (toggleEditForm) {
+      dispatch(editAddress({ id: id, newAddress }));
+      toast.success("Address Edited");
+    } else {
       dispatch(addAddress(newAddress));
       toast.success("Address Added");
-    } else {
-      dispatch(editAddress(newAddress));
-      toast.success("Address Edited");
     }
     setToggleForm(false);
     setToggleEditForm(false);
