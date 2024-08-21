@@ -6,9 +6,17 @@ import { Toaster } from "react-hot-toast";
 const ProfileDetails = () => {
   const [toggle, setToggle] = useState(false);
   const [toggleForm, setToggleForm] = useState(false);
+  const [toggleEditForm, setToggleEditForm] = useState(false);
+  const [id, setId] = useState("");
 
   const user = useSelector((state) => state.profile.profile);
   const addresses = useSelector((state) => state.addresses.addresses);
+
+  const editAddressHandler = (userId) => {
+    setToggleEditForm(true);
+    setToggleForm(true);
+    setId(userId);
+  };
 
   return (
     <>
@@ -80,7 +88,9 @@ const ProfileDetails = () => {
                           {` Contact: ${address.mobileNumber}`}
                         </p>
                         <div className="my-3">
-                          <button className="btn btn-light fs-6 fw-semibold">
+                          <button
+                            onClick={() => editAddressHandler(address.userId)}
+                            className="btn btn-light fs-6 fw-semibold">
                             Edit
                           </button>
                           <button className="btn btn-light fs-6 fw-semibold mx-3">
@@ -95,7 +105,12 @@ const ProfileDetails = () => {
               </div>
             </div>
           ) : (
-            <AddressForm setToggleForm={setToggleForm} />
+            <AddressForm
+              setToggleForm={setToggleForm}
+              toggleEditForm={toggleEditForm}
+              id={id}
+              setToggleEditForm={setToggleEditForm}
+            />
           )}
         </div>
         <Toaster />
