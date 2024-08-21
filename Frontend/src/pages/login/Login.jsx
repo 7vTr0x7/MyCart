@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpUser, users } from "../profile/profileSlice";
+import { loginUser, signUpUser, users } from "../profile/profileSlice";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
@@ -12,9 +13,9 @@ const Login = () => {
   const [pass, setPass] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { profile, status, error } = useSelector((state) => state.profile);
-  console.log(profile);
 
   const createAccountHandler = () => {
     const newUser = {
@@ -25,6 +26,16 @@ const Login = () => {
     };
 
     dispatch(signUpUser(newUser));
+    if (error !== null && error !== "") {
+      navigate("/profile");
+    }
+  };
+
+  const loginHandler = () => {
+    dispatch(loginUser({ email, pass }));
+    if (error !== null && error !== "") {
+      navigate("/profile");
+    }
   };
 
   useEffect(() => {
@@ -82,7 +93,9 @@ const Login = () => {
           </form>
           {isLoginForm ? (
             <div className="my-4 d-flex justify-content-between text-center">
-              <button className="btn btn-light ">Login</button>
+              <button className="btn btn-light " onClick={loginHandler}>
+                Login
+              </button>
               <button className="btn btn-light ">Login as Guest</button>
             </div>
           ) : (
