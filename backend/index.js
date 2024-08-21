@@ -195,7 +195,7 @@ const readUsers = async () => {
   }
 };
 
-app.get("api/users", async (req, res) => {
+app.get("/api/users", async (req, res) => {
   try {
     const users = await readUsers();
     if (users.length > 0) {
