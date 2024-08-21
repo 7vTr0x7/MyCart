@@ -14,6 +14,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { profile, status, error } = useSelector((state) => state.profile);
 
@@ -39,15 +40,14 @@ const Login = () => {
   }, [error]);
 
   useEffect(() => {
-    if (profile.email) {
-      if (isLoginForm) {
-        toast.success("Login Successfully");
-      } else {
-        toast.success("Sign up Successfully");
-      }
+    if (profile?.email) {
       navigate("/profile");
     }
   }, [profile?.email]);
+
+  const guestLoginHandler = () => {
+    dispatch(loginUser({ email: "vtr0x@gmail.com", pass: "1234" }));
+  };
 
   return (
     <>
@@ -100,7 +100,9 @@ const Login = () => {
               <button className="btn btn-light " onClick={loginHandler}>
                 Login
               </button>
-              <button className="btn btn-light ">Login as Guest</button>
+              <button className="btn btn-light " onClick={guestLoginHandler}>
+                Login as Guest
+              </button>
             </div>
           ) : (
             <button

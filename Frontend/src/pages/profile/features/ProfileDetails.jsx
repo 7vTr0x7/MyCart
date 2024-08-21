@@ -80,7 +80,7 @@ const ProfileDetails = () => {
                   <>
                     <p className="fs-5 fw-semibold ">Profile Details</p>
                     <p className="fs-6 fw-semibold my-3">
-                      Name: {user.firstName + user.lastName}
+                      Name: {`${user.firstName} ${user.lastName}`}
                     </p>
                     <div className="d-flex justify-content-between mt-3">
                       <span className="fs-6 fw-semibold ">
@@ -89,7 +89,7 @@ const ProfileDetails = () => {
                       <button
                         onClick={logoutHandler}
                         className="btn btn-light fs-6 fw-semibold">
-                        <Link className="nav-link" to="/login">
+                        <Link className="nav-link" to="/login" state={true}>
                           Log Out
                         </Link>
                       </button>
