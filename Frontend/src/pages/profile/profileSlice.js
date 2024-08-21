@@ -78,16 +78,23 @@ const profileSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    deleteProfile: (state, action) => {
+      return {
+        ...state,
+        profile: {},
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginUser.pending, (state, action) => {
       state.status = "Loading";
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      state.status = "Success";
-      if (action.payload.rejected) {
+      if (action.payload?.rejected) {
         state.error = action.payload.message;
       } else {
+        state.status = "Success";
         state.profile = action.payload;
       }
     });
@@ -99,10 +106,10 @@ const profileSlice = createSlice({
       state.status = "Loading";
     });
     builder.addCase(signUpUser.fulfilled, (state, action) => {
-      state.status = "Success";
-      if (action.payload.rejected) {
+      if (action.payload?.rejected) {
         state.error = action.payload.message;
       } else {
+        state.status = "Success";
         state.profile = action.payload;
       }
     });
@@ -113,4 +120,5 @@ const profileSlice = createSlice({
   },
 });
 
+export const { deleteProfile } = profileSlice.actions;
 export default profileSlice.reducer;

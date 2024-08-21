@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signUpUser, users } from "../profile/profileSlice";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
@@ -26,28 +26,28 @@ const Login = () => {
     };
 
     dispatch(signUpUser(newUser));
-    if (error !== null && error !== "") {
-      toast.error("Sign up Successfully");
-
-      navigate("/profile");
-    }
   };
 
   const loginHandler = () => {
     dispatch(loginUser({ email, pass }));
-    if (error !== null && error !== "") {
-      toast.error("Login Successfully");
-
-      navigate("/profile");
-    }
   };
 
   useEffect(() => {
     if (error) {
       toast.error(error);
-      console.log(error);
     }
   }, [error]);
+
+  useEffect(() => {
+    if (profile.email) {
+      if (isLoginForm) {
+        toast.success("Login Successfully");
+      } else {
+        toast.success("Sign up Successfully");
+      }
+      navigate("/profile");
+    }
+  }, [profile?.email]);
 
   return (
     <>

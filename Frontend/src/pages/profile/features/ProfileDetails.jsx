@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AddressForm from "./AddressForm";
 import toast, { Toaster } from "react-hot-toast";
 import { deleteAddress } from "../addressSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { deleteProfile } from "../profileSlice";
 
 const ProfileDetails = () => {
   const [toggle, setToggle] = useState(false);
@@ -12,7 +13,6 @@ const ProfileDetails = () => {
   const [id, setId] = useState("");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const user = useSelector((state) => state.profile.profile);
   const addresses = useSelector((state) => state.addresses.addresses);
@@ -29,7 +29,7 @@ const ProfileDetails = () => {
   };
 
   const logoutHandler = () => {
-    navigate("/login");
+    dispatch(deleteProfile());
   };
 
   return (
@@ -89,7 +89,9 @@ const ProfileDetails = () => {
                       <button
                         onClick={logoutHandler}
                         className="btn btn-light fs-6 fw-semibold">
-                        Log Out
+                        <Link className="nav-link" to="/login">
+                          Log Out
+                        </Link>
                       </button>
                     </div>
                   </>
