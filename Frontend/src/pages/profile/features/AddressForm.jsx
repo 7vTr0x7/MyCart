@@ -63,15 +63,23 @@ const AddressForm = ({
       mobileNumber: Number(contact),
     };
 
+    toast.success("Please Wait");
     if (toggleEditForm) {
-      dispatch(editAddress({ userId: _id, addressId: id, newAddress }));
-      dispatch(readAddress(_id));
-      toast.success("Address Edited");
+      dispatch(editAddress({ userId: _id, addressId: id, newAddress })).then(
+        () => {
+          dispatch(readAddress(_id)).then(() => {
+            toast.success("Address Edited");
+          });
+        }
+      );
     } else {
-      dispatch(addAddress({ userId: _id, newAddress }));
-      dispatch(readAddress(_id));
-      toast.success("Address Added");
+      dispatch(addAddress({ userId: _id, newAddress })).then(() => {
+        dispatch(readAddress(_id)).then(() => {
+          toast.success("Address Added");
+        });
+      });
     }
+
     setToggleForm(false);
     setToggleEditForm(false);
   };

@@ -113,11 +113,7 @@ const addressSlice = createSlice({
     });
     builder.addCase(readAddress.fulfilled, (state, action) => {
       state.status = "Success";
-      if (action.payload.length > 0) {
-        state.addresses = action.payload;
-      } else {
-        return state;
-      }
+      state.addresses = [...action.payload];
     });
     builder.addCase(readAddress.rejected, (state, action) => {
       state.status = "Loading";

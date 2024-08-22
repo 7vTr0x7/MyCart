@@ -24,10 +24,10 @@ const ProfileDetails = () => {
     setId(_id);
   };
 
-  // const deleteAddressHandler = (_id) => {
-  //   dispatch(deleteAddress(_id));
-  //   toast.success("Address Deleted");
-  // };
+  const deleteAddressHandler = (_id) => {
+    //    dispatch(deleteAddress(_id));
+    toast.success("Address Deleted");
+  };
 
   const logoutHandler = () => {
     dispatch(deleteProfile());
@@ -35,7 +35,7 @@ const ProfileDetails = () => {
 
   useEffect(() => {
     dispatch(readAddress(_id));
-  }, []);
+  }, [_id, dispatch]);
 
   return (
     <>
