@@ -338,7 +338,29 @@ app.post("/api/users/user/:userId/address/:addressId", async (req, res) => {
       res.status(404).json({ error: `Address not found` });
     }
   } catch (error) {
-    res.status(500).json({ error: `Failed to delete address ${error}` });
+    res.status(500).json({ error: `Failed to update address ${error}` });
+  }
+});
+
+const readAddresses = async (userId) => {
+  try {
+    const addresses = await Addresses.find({ userId: userId });
+    return addresses;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("/api/users/user/:userId/address", async (req, res) => {
+  try {
+    const addresses = await readAddresses(req.params.userId);
+    if (addresses.length > 0) {
+      res.json(addresses);
+    } else {
+      res.status(404).json({ error: `Address not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to get address ${error}` });
   }
 });
 
