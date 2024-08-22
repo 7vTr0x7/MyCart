@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddressForm from "./AddressForm";
 import toast, { Toaster } from "react-hot-toast";
-import { deleteAddress } from "../addressSlice";
+import { deleteAddress, readAddress } from "../addressSlice";
 import { Link } from "react-router-dom";
 import { deleteProfile } from "../profileSlice";
 
@@ -15,6 +15,7 @@ const ProfileDetails = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.profile.profile);
+  const { _id } = user;
   const addresses = useSelector((state) => state.addresses.addresses);
 
   const editAddressHandler = (_id) => {
@@ -31,6 +32,10 @@ const ProfileDetails = () => {
   const logoutHandler = () => {
     dispatch(deleteProfile());
   };
+
+  useEffect(() => {
+    dispatch(readAddress(_id));
+  }, []);
 
   return (
     <>
