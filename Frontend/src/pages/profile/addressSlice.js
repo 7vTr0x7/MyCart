@@ -4,19 +4,23 @@ export const addAddress = createAsyncThunk(
   "addAddress/user",
   async ({ userId, newAddress }) => {
     try {
-      const res = fetch(`/api/users/user/${userId}/address`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newAddress),
-      });
+      const res = await fetch(
+        `https://mycartbackend.vercel.app/api/users/user/${userId}/address`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newAddress),
+        }
+      );
 
       if (!res.ok) {
         console.log("Failed to add address");
       }
 
       const data = await res.json();
+      console.log(data);
       return data;
     } catch (error) {
       console.log(error);

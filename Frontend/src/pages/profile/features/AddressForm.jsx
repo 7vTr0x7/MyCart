@@ -67,7 +67,7 @@ const AddressForm = ({
       dispatch(editAddress({ id: id, newAddress }));
       toast.success("Address Edited");
     } else {
-      dispatch(addAddress({ _id, newAddress }));
+      dispatch(addAddress({ userId: _id, newAddress }));
       toast.success("Address Added");
     }
     setToggleForm(false);
