@@ -21,8 +21,10 @@ const AddressForm = ({
   const dispatch = useDispatch();
 
   const addresses = useSelector((state) => state.addresses.addresses);
+  const profile = useSelector((state) => state.profile.profile);
+  const { _id } = profile;
 
-  const dataHandler = (e) => {
+  const dataHandler = () => {
     if (addresses.length > 0) {
       const {
         name,
@@ -49,10 +51,9 @@ const AddressForm = ({
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const _id = id ? id : Math.floor(Math.random() * 100).toString();
     const newAddress = {
       name,
-      _id: _id,
+      userId: _id,
       houseNo,
       street,
       city,
@@ -66,7 +67,7 @@ const AddressForm = ({
       dispatch(editAddress({ id: id, newAddress }));
       toast.success("Address Edited");
     } else {
-      dispatch(addAddress(newAddress));
+      dispatch(addAddress({ _id, newAddress }));
       toast.success("Address Added");
     }
     setToggleForm(false);

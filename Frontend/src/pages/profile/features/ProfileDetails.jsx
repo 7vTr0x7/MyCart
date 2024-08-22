@@ -62,7 +62,7 @@ const ProfileDetails = () => {
                       className=" col-md-6 fs-5 fw-semibold"
                       style={{ cursor: "pointer" }}
                       onClick={() => setToggleForm(false)}>
-                      My Addresses
+                      My Address
                     </span>
                     <span
                       className=" col-md-6  fs-5 fw-semibold"
