@@ -43,6 +43,8 @@ const Login = () => {
   };
 
   const loginHandler = async () => {
+    toast.success("Please Wait");
+
     const res = await fetch(
       `https://mycartbackend.vercel.app/api/users/user/${email}`
     );
@@ -50,10 +52,8 @@ const Login = () => {
     const data = await res.json();
 
     if (data.password !== pass) {
-      toast.success("Please Wait");
       toast.error("Wrong Password");
     } else {
-      toast.success("Please Wait");
       dispatch(loginUser({ email, pass })).then(() => {
         toast.success("Log In Successful");
         navigate("/profile");
