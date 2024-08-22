@@ -49,10 +49,11 @@ const Login = () => {
 
     const data = await res.json();
 
-    toast.success("Please Wait");
     if (data.password !== pass) {
+      toast.success("Please Wait");
       toast.error("Wrong Password");
     } else {
+      toast.success("Please Wait");
       dispatch(loginUser({ email, pass })).then(() => {
         toast.success("Log In Successful");
         navigate("/profile");
