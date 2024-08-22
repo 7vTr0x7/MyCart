@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddressForm from "./AddressForm";
 import toast, { Toaster } from "react-hot-toast";
-import { readAddress } from "../addressSlice";
+import { deleteAddress, readAddress } from "../addressSlice";
 import { Link } from "react-router-dom";
 import { deleteProfile } from "../profileSlice";
 
@@ -24,9 +24,12 @@ const ProfileDetails = () => {
     setId(_id);
   };
 
-  const deleteAddressHandler = (_id) => {
-    //    dispatch(deleteAddress(_id));
-    toast.success("Address Deleted");
+  const deleteAddressHandler = (addressId) => {
+    toast.success("Please Wait");
+
+    dispatch(deleteAddress({ userId: _id, addressId })).then(() => {
+      toast.success("Address Deleted");
+    });
   };
 
   const logoutHandler = () => {

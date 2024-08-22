@@ -309,7 +309,7 @@ const deleteAddress = async (id) => {
 
 app.delete("/api/users/user/:userId/address/:addressId", async (req, res) => {
   try {
-    const address = await deleteAddress(req.param.addressId);
+    const address = await deleteAddress(req.params.addressId);
     if (address) {
       res.json(address);
     } else {

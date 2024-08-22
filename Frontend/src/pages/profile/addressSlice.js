@@ -76,6 +76,28 @@ export const editAddress = createAsyncThunk(
   }
 );
 
+export const deleteAddress = createAsyncThunk(
+  "deleteAddress/user",
+  async ({ userId, addressId }) => {
+    try {
+      const res = await fetch(
+        `https://mycartbackend.vercel.app/api/users/user/${userId}/address/${addressId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!res.ok) {
+        console.log("Failed to delete address");
+      }
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const addressSlice = createSlice({
   name: "addresses",
   initialState: {
@@ -128,6 +150,16 @@ const addressSlice = createSlice({
     builder.addCase(editAddress.rejected, (state, action) => {
       state.status = "Loading";
       state.error = "Failed to edit Address";
+    });
+    builder.addCase(deleteAddress.pending, (state, action) => {
+      state.status = "Loading";
+    });
+    builder.addCase(deleteAddress.fulfilled, (state, action) => {
+      state.status = "Success";
+    });
+    builder.addCase(deleteAddress.rejected, (state, action) => {
+      state.status = "Loading";
+      state.error = "Failed to delete Address";
     });
   },
 });
