@@ -339,8 +339,8 @@ app.get("/api/users/user/:userId/address", async (req, res) => {
 
 const readWishlist = async (userId) => {
   try {
-    const products = await Product.find({ userId: userId });
-    return products;
+    const user = await Users.findById(userId);
+    return user.wishlist;
   } catch (error) {
     console.log(error);
   }
@@ -356,6 +356,29 @@ app.get("/api/users/user/:userId/wishlist", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: `Failed to get wishlist ${error}` });
+  }
+});
+
+const addToWishlist = async (userId, prod) => {
+  try {
+    const user = await Users.findById(userId);
+    user.wishlist = [...user.wishlist, prod];
+    return user.wishlist;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.post("/api/users/user/:userId/wishlist", async (req, res) => {
+  try {
+    const products = await addToWishlist(req.params.userId, req.body);
+    if (products.includes(res.body)) {
+      res.json(res.body);
+    } else {
+      res.status(404).json({ error: `product not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to add to wishlist ${error}` });
   }
 });
 

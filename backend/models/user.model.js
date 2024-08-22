@@ -17,6 +17,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  wishlist: [{ type: Object }],
+  cart: [{ type: Object }],
 });
 const Users = mongoose.model("Users", userSchema);
 
