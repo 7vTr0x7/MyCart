@@ -359,11 +359,12 @@ app.get("/api/users/user/:userId/wishlist", async (req, res) => {
   }
 });
 
-const addToWishlist = async (userId, prod) => {
+const addToWishlist = async (userId, prodId) => {
   try {
     const user = await Users.findById(userId);
-    user.wishlist = [...user.wishlist, prod];
-    return user.wishlist;
+    user.wishlist.push(prodId);
+    const updated = await user.save();
+    return updated.wishlist;
   } catch (error) {
     console.log(error);
   }
@@ -371,9 +372,9 @@ const addToWishlist = async (userId, prod) => {
 
 app.post("/api/users/user/:userId/wishlist", async (req, res) => {
   try {
-    const products = await addToWishlist(req.params.userId, req.body);
-    if (products.includes(res.body)) {
-      res.json(res.body);
+    const products = await addToWishlist(req.params.userId, req.body._id);
+    if (products) {
+      res.json(products);
     } else {
       res.status(404).json({ error: `product not found` });
     }
