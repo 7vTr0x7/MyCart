@@ -28,7 +28,9 @@ const ProfileDetails = () => {
     toast.success("Please Wait");
 
     dispatch(deleteAddress({ userId: _id, addressId })).then(() => {
-      toast.success("Address Deleted");
+      dispatch(readAddress(_id)).then(() => {
+        toast.success("Address Deleted");
+      });
     });
   };
 
