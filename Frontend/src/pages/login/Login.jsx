@@ -43,8 +43,6 @@ const Login = () => {
   };
 
   const loginHandler = async () => {
-    toast.success("Please Wait");
-
     const res = await fetch(
       `https://mycartbackend.vercel.app/api/users/user/${email}`
     );
