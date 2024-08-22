@@ -26,12 +26,10 @@ const Login = () => {
       password: pass,
     };
 
-    toast.success("Please wait");
     dispatch(signUpUser(newUser));
   };
 
   const loginHandler = () => {
-    toast.success("Please wait");
     dispatch(loginUser({ email, pass }));
   };
 
@@ -48,8 +46,6 @@ const Login = () => {
   }, [profile?.email]);
 
   const guestLoginHandler = () => {
-    toast.success("Please wait");
-
     dispatch(loginUser({ email: "vtr0x@gmail.com", pass: "1234" }));
   };
 
