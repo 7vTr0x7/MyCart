@@ -159,33 +159,6 @@ app.post("/api/products/multiple", async (req, res) => {
   }
 });
 
-const readCart = async (data) => {
-  try {
-    const products = [];
-    for (let i = 0; i < data.length; i++) {
-      const product = await Product.findById(data[i]);
-      products.push(product);
-    }
-
-    return products;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-app.get("/api/cart/products", async (req, res) => {
-  try {
-    const products = await readCart(req.body);
-    if (products.length !== 0) {
-      res.json(products);
-    } else {
-      res.status(404).json({ error: "Products not Found" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: `Failed to read products : ${error}` });
-  }
-});
-
 const readUsers = async () => {
   try {
     const users = await Users.find();
@@ -361,6 +334,28 @@ app.get("/api/users/user/:userId/address", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: `Failed to get address ${error}` });
+  }
+});
+
+const readWishlist = async (userId) => {
+  try {
+    const products = await Product.find({ userId: userId });
+    return products;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("/api/users/user/:userId/wishlist", async (req, res) => {
+  try {
+    const products = await readWishlist(req.params.userId);
+    if (products.length > 0) {
+      res.json(products);
+    } else {
+      res.status(404).json({ error: `products not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to get wishlist ${error}` });
   }
 });
 
