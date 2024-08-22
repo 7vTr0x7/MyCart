@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { addAddress, editAddress } from "../addressSlice";
+import { addAddress, editAddress, readAddress } from "../addressSlice";
 
 const AddressForm = ({
   setToggleForm,
@@ -64,10 +64,12 @@ const AddressForm = ({
     };
 
     if (toggleEditForm) {
-      dispatch(editAddress({ id: id, newAddress }));
+      dispatch(editAddress({ userId: _id, addressId: id, newAddress }));
+      dispatch(readAddress(_id));
       toast.success("Address Edited");
     } else {
       dispatch(addAddress({ userId: _id, newAddress }));
+      dispatch(readAddress(_id));
       toast.success("Address Added");
     }
     setToggleForm(false);

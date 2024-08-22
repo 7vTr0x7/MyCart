@@ -48,6 +48,34 @@ export const readAddress = createAsyncThunk(
   }
 );
 
+export const editAddress = createAsyncThunk(
+  "editAddress/user",
+  async ({ userId, addressId, newAddress }) => {
+    try {
+      const res = await fetch(
+        `https://mycartbackend.vercel.app/api/users/user/${userId}/address/${addressId}`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newAddress),
+        }
+      );
+
+      if (!res.ok) {
+        console.log("Failed to edit address");
+      }
+
+      const data = await res.json();
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const addressSlice = createSlice({
   name: "addresses",
   initialState: {
@@ -95,9 +123,17 @@ const addressSlice = createSlice({
       state.status = "Loading";
       state.error = "Failed to read Address";
     });
+    builder.addCase(editAddress.pending, (state, action) => {
+      state.status = "Loading";
+    });
+    builder.addCase(editAddress.fulfilled, (state, action) => {
+      state.status = "Success";
+    });
+    builder.addCase(editAddress.rejected, (state, action) => {
+      state.status = "Loading";
+      state.error = "Failed to edit Address";
+    });
   },
 });
-
-export const { editAddress, deleteAddress } = addressSlice.actions;
 
 export default addressSlice.reducer;
