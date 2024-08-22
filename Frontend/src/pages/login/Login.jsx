@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, signUpUser, users } from "../profile/profileSlice";
+import { loginUser, signUpUser } from "../profile/profileSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -14,11 +14,10 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const { profile, status, error } = useSelector((state) => state.profile);
 
-  const createAccountHandler = () => {
+  const createAccountHandler = async () => {
     const newUser = {
       firstName,
       lastName,
@@ -26,11 +25,29 @@ const Login = () => {
       password: pass,
     };
 
-    dispatch(signUpUser(newUser));
+    const res = await fetch(
+      `https://mycartbackend.vercel.app/api/users/user/${email}`
+    );
+
+    const data = await res.json();
+
+    if (data) {
+      toast.success("Already have account please log in");
+    } else {
+      toast.success("Please Wait");
+      dispatch(signUpUser(newUser)).then(() => {
+        toast.success("Sign Up Successful");
+        navigate("/profile");
+      });
+    }
   };
 
   const loginHandler = () => {
-    dispatch(loginUser({ email, pass }));
+    toast.success("Please Wait");
+    dispatch(loginUser({ email, pass })).then(() => {
+      toast.success("Log In Successful");
+      navigate("/profile");
+    });
   };
 
   useEffect(() => {
@@ -39,14 +56,13 @@ const Login = () => {
     }
   }, [error]);
 
-  useEffect(() => {
-    if (profile?.email) {
-      navigate("/profile");
-    }
-  }, [profile?.email]);
-
   const guestLoginHandler = () => {
-    dispatch(loginUser({ email: "vtr0x@gmail.com", pass: "1234" }));
+    toast.success("Please Wait");
+
+    dispatch(loginUser({ email: "vtr0x@gmail.com", pass: "1234" })).then(() => {
+      toast.success("Logged In As a Guest");
+      navigate("/profile");
+    });
   };
 
   return (

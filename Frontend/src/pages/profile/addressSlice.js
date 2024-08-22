@@ -20,7 +20,6 @@ export const addAddress = createAsyncThunk(
       }
 
       const data = await res.json();
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -32,16 +31,18 @@ export const readAddress = createAsyncThunk(
   "readAddresses/user",
   async (userId) => {
     try {
-      const res = await fetch(
-        `https://mycartbackend.vercel.app/api/users/user/${userId}/address`
-      );
+      if (userId) {
+        const res = await fetch(
+          `https://mycartbackend.vercel.app/api/users/user/${userId}/address`
+        );
 
-      if (!res.ok) {
-        console.log("Failed to get addresses");
+        if (!res.ok) {
+          console.log("Failed to get addresses");
+        }
+
+        const data = await res.json();
+        return data;
       }
-
-      const data = await res.json();
-      return data;
     } catch (error) {
       console.log(error);
     }
@@ -135,7 +136,9 @@ const addressSlice = createSlice({
     });
     builder.addCase(readAddress.fulfilled, (state, action) => {
       state.status = "Success";
-      state.addresses = [...action.payload];
+      if (action.payload && action.payload.length > 0) {
+        state.addresses = action.payload;
+      }
     });
     builder.addCase(readAddress.rejected, (state, action) => {
       state.status = "Loading";
