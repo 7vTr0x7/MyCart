@@ -30,15 +30,16 @@ const Login = () => {
     );
 
     const data = await res.json();
+    console.log(data);
 
-    if (data) {
-      toast.error("Already have account please log in");
-    } else {
+    if (data?.error) {
       toast.success("Please Wait");
       dispatch(signUpUser(newUser)).then(() => {
         toast.success("Sign Up Successful");
         navigate("/profile");
       });
+    } else {
+      toast.error("Already have account please log in");
     }
   };
 
