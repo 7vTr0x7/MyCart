@@ -383,6 +383,11 @@ app.post("/api/users/user/:userId/wishlist", async (req, res) => {
   }
 });
 
+// const removeFromWishlist = async(userId) => {
+//   trycatch
+
+// }
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
