@@ -320,6 +320,28 @@ app.delete("/api/users/user/:userId/address/:addressId", async (req, res) => {
   }
 });
 
+const updateAddress = async (id, data) => {
+  try {
+    const address = await Addresses.findByIdAndUpdate(id, data, { new: true });
+    return address;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.post("/api/users/user/:userId/address/:addressId", async (req, res) => {
+  try {
+    const address = await updateAddress(req.params.addressId, req.body);
+    if (address) {
+      res.json(address);
+    } else {
+      res.status(404).json({ error: `Address not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to delete address ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
