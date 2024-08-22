@@ -32,7 +32,7 @@ const Login = () => {
     const data = await res.json();
 
     if (data) {
-      toast.success("Already have account please log in");
+      toast.error("Already have account please log in");
     } else {
       toast.success("Please Wait");
       dispatch(signUpUser(newUser)).then(() => {
@@ -42,19 +42,23 @@ const Login = () => {
     }
   };
 
-  const loginHandler = () => {
-    toast.success("Please Wait");
-    dispatch(loginUser({ email, pass })).then(() => {
-      toast.success("Log In Successful");
-      navigate("/profile");
-    });
-  };
+  const loginHandler = async () => {
+    const res = await fetch(
+      `https://mycartbackend.vercel.app/api/users/user/${email}`
+    );
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
+    const data = await res.json();
+
+    if (data.password !== pass) {
+      toast.error("Wrong Password");
+    } else {
+      toast.success("Please Wait");
+      dispatch(loginUser({ email, pass })).then(() => {
+        toast.success("Log In Successful");
+        navigate("/profile");
+      });
     }
-  }, [error]);
+  };
 
   const guestLoginHandler = () => {
     toast.success("Please Wait");

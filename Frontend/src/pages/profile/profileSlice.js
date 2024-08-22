@@ -8,15 +8,8 @@ export const loginUser = createAsyncThunk(
         `https://mycartbackend.vercel.app/api/users/user/${email}`
       );
       const data = res.data;
-      if (data.password !== pass) {
-        const res = {
-          rejected: true,
-          message: "Wrong password",
-        };
-        return res;
-      } else {
-        return data;
-      }
+
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -67,12 +60,8 @@ const profileSlice = createSlice({
       state.status = "Loading";
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      if (action.payload?.rejected) {
-        state.error = action.payload.message;
-      } else {
-        state.status = "Success";
-        state.profile = action.payload;
-      }
+      state.status = "Success";
+      state.profile = action.payload;
     });
     builder.addCase(loginUser.rejected, (state, action) => {
       state.status = "Error";
