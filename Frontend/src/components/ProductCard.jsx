@@ -31,6 +31,8 @@ const ProductCard = ({ product, isCart }) => {
   };
 
   const addToWishlistHandler = (id) => {
+    toast.success("Please Wait");
+
     if (!wishlistProductIds.includes(id) && _id) {
       dispatch(addToWishlist({ userId: _id, prodId: id })).then(() => {
         dispatch(readWishlist(_id)).then(() => {
@@ -41,6 +43,8 @@ const ProductCard = ({ product, isCart }) => {
   };
 
   const removeFromWishlistHandler = (id) => {
+    toast.success("Please Wait");
+
     if (wishlistProductIds.includes(id) && _id) {
       dispatch(removeFromWishlist({ userId: _id, prodId: id })).then(() => {
         dispatch(readWishlist(_id)).then(() => {

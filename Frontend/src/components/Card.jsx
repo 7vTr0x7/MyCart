@@ -25,6 +25,8 @@ const Card = ({ prod }) => {
   const productIds = useSelector((state) => state.cart.productIds);
 
   const addToWishlistHandler = (id) => {
+    toast.success("Please Wait");
+
     if (!wishlistProductIds.includes(id) && _id) {
       dispatch(addToWishlist({ userId: _id, prodId: id })).then(() => {
         dispatch(readWishlist(_id)).then(() => {
@@ -35,6 +37,8 @@ const Card = ({ prod }) => {
   };
 
   const removeFromWishlistHandler = (id) => {
+    toast.success("Please Wait");
+
     if (wishlistProductIds.includes(id) && _id) {
       dispatch(removeFromWishlist({ userId: _id, prodId: id })).then(() => {
         dispatch(readWishlist(_id)).then(() => {
