@@ -51,10 +51,12 @@ const ProductCard = ({ product, isCart }) => {
   };
 
   const addToCartHandler = (id) => {
+    toast.success("Please Wait");
+
     if (!productIds.includes(id)) {
       dispatch(addToCart({ userId: _id, prodId: id })).then(() => {
         dispatch(readCart(_id)).then(() => {
-          toast.success("Added to wishlist");
+          toast.success("Added to Cart");
         });
       });
     }
@@ -64,13 +66,14 @@ const ProductCard = ({ product, isCart }) => {
     if (productIds.includes(id)) {
       dispatch(removeFromCart({ userId: _id, prodId: id })).then(() => {
         dispatch(readCart(_id)).then(() => {
-          toast.success("Removed From wishlist");
+          toast.success("Removed From Cart");
         });
       });
     }
   };
 
   const handleIncrement = () => {
+    toast.success("Please Wait");
     dispatch(incQuantity(product._id));
     toast.success("Increased Quantity");
   };
@@ -85,6 +88,8 @@ const ProductCard = ({ product, isCart }) => {
 
   useEffect(() => {
     dispatch(readWishlist(_id));
+  }, [_id]);
+  useEffect(() => {
     dispatch(readCart(_id));
   }, [_id]);
 

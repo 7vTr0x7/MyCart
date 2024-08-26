@@ -34,7 +34,7 @@ export const removeFromCart = createAsyncThunk(
       const res = await fetch(
         `https://mycartbackend.vercel.app/api/users/user/${userId}/cart`,
         {
-          method: "POST",
+          method: "DELETE",
           headers: {
             "content-type": "application/json",
           },
@@ -80,6 +80,13 @@ const cartSlice = createSlice({
     error: null,
   },
   reducers: {
+    addProductsToCart: (state, action) => {
+      const products = action.payload.map((prod) => ({ ...prod, quantity: 1 }));
+      return {
+        ...state,
+        cart: [...products],
+      };
+    },
     incQuantity: (state, action) => {
       const index = state.cart.findIndex((prod) => prod._id === action.payload);
 
@@ -115,9 +122,7 @@ const cartSlice = createSlice({
     });
     builder.addCase(readCart.fulfilled, (state, action) => {
       state.status = "Success";
-      if (action.payload && action.payload > 0) {
-        state.productIds = action.payload;
-      }
+      state.productIds = action.payload;
     });
     builder.addCase(readCart.rejected, (state, action) => {
       state.status = "failed";
@@ -136,6 +141,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { incQuantity, decQuantity } = cartSlice.actions;
+export const { addProductsToCart, incQuantity, decQuantity } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -48,10 +48,12 @@ const Card = ({ prod }) => {
     }
   };
   const addToCartHandler = (id) => {
+    toast.success("Please Wait");
+
     if (!productIds.includes(id)) {
       dispatch(addToCart({ userId: _id, prodId: id })).then(() => {
         dispatch(readCart(_id)).then(() => {
-          toast.success("Added to wishlist");
+          toast.success("Added to Cart");
         });
       });
     }

@@ -1,11 +1,30 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import ProductCard from "../../components/ProductCard";
 import PriceDetails from "./features/PriceDetails";
+import { useFetchProductsByIds } from "./../../hooks/useFetchProductsByIds";
+import { addProductsToCart, readCart } from "./cartSlice";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const productIds = useSelector((state) => state.cart.productIds);
+  const profile = useSelector((state) => state.profile.profile);
+  const { _id } = profile;
+
   const cartProducts = useSelector((state) => state.cart.cart);
+
+  const products = useFetchProductsByIds(productIds);
+
+  useEffect(() => {
+    if (productIds && productIds.length > 0 && products) {
+      dispatch(addProductsToCart(products));
+    }
+  }, [productIds]);
+
+  useEffect(() => {
+    dispatch(readCart(_id));
+  }, [_id]);
 
   return (
     <>
