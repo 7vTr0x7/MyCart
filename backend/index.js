@@ -373,7 +373,7 @@ const addToWishlist = async (userId, prodId) => {
 app.post("/api/users/user/:userId/wishlist", async (req, res) => {
   try {
     const products = await addToWishlist(req.params.userId, req.body.prodId);
-    if (products.length > 0) {
+    if (products) {
       res.json(products);
     } else {
       res.status(404).json({ error: `product not found` });

@@ -18,16 +18,21 @@ const Card = ({ prod }) => {
   const wishlistProductIds = useSelector(
     (state) => state.wishlist.wishlistProductIds
   );
+  const profile = useSelector((state) => state.profile.profile);
+
+  const { _id } = profile;
   const productIds = useSelector((state) => state.cart.productIds);
 
   const addToWishlistHandler = (id) => {
-    dispatch(addToWishlist(id));
-    toast.success("Added to wishlist");
+    dispatch(addToWishlist({ userId: _id, prodId: id })).then(() => {
+      toast.success("Added to wishlist");
+    });
   };
 
   const removeFromWishlistHandler = (id) => {
-    dispatch(removeFromWishlist(id));
-    toast.success("Removed From wishlist");
+    dispatch(removeFromWishlist({ userId: _id, prodId: id })).then(() => {
+      toast.success("Removed From wishlist");
+    });
   };
 
   const addToCartHandler = (prod) => {
@@ -38,9 +43,9 @@ const Card = ({ prod }) => {
   return (
     <>
       <div>
-        {wishlistProductIds.includes(prod._id) ? (
+        {wishlistProductIds && wishlistProductIds.includes(prod._id) ? (
           <IoMdHeart
-            onClick={() => removeFromWishlistHandler(prod)}
+            onClick={() => removeFromWishlistHandler(prod._id)}
             className="fs-4 mt-2 mx-2"
             style={{
               position: "absolute",
@@ -49,7 +54,7 @@ const Card = ({ prod }) => {
           />
         ) : (
           <CiHeart
-            onClick={() => addToWishlistHandler(prod)}
+            onClick={() => addToWishlistHandler(prod._id)}
             className="fs-4 mt-2 mx-2"
             style={{
               position: "absolute",
