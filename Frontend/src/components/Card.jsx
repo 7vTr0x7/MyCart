@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { CiHeart } from "react-icons/ci";
 import { IoMdHeart } from "react-icons/io";
@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import {
   addToWishlist,
+  readWishlist,
   removeFromWishlist,
 } from "../pages/wishlist/wishlistSlice";
 import { addToCart } from "../pages/cart/cartSlice";
@@ -24,15 +25,24 @@ const Card = ({ prod }) => {
   const productIds = useSelector((state) => state.cart.productIds);
 
   const addToWishlistHandler = (id) => {
-    dispatch(addToWishlist({ userId: _id, prodId: id })).then(() => {
-      toast.success("Added to wishlist");
-    });
+    console.log(wishlistProductIds.includes(id));
+    if (!wishlistProductIds.includes(id)) {
+      dispatch(addToWishlist({ userId: _id, prodId: id })).then(() => {
+        dispatch(readWishlist()).then(() => {
+          toast.success("Added to wishlist");
+        });
+      });
+    }
   };
 
   const removeFromWishlistHandler = (id) => {
-    dispatch(removeFromWishlist({ userId: _id, prodId: id })).then(() => {
-      toast.success("Removed From wishlist");
-    });
+    if (wishlistProductIds.includes(id)) {
+      dispatch(removeFromWishlist({ userId: _id, prodId: id })).then(() => {
+        dispatch(readWishlist()).then(() => {
+          toast.success("Removed From wishlist");
+        });
+      });
+    }
   };
 
   const addToCartHandler = (prod) => {
@@ -40,10 +50,16 @@ const Card = ({ prod }) => {
     toast.success("Added to Cart");
   };
 
+  useEffect(() => {
+    dispatch(readWishlist());
+  }, []);
+
+  console.log(wishlistProductIds);
+
   return (
     <>
       <div>
-        {wishlistProductIds && wishlistProductIds.includes(prod._id) ? (
+        {/* {wishlistProductIds && wishlistProductIds.includes(prod._id) ? (
           <IoMdHeart
             onClick={() => removeFromWishlistHandler(prod._id)}
             className="fs-4 mt-2 mx-2"
@@ -61,7 +77,7 @@ const Card = ({ prod }) => {
               right: "0",
             }}
           />
-        )}
+        )} */}
         <img
           className="img-fluid card-img-top"
           style={{ cursor: "pointer" }}

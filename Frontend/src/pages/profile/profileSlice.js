@@ -38,7 +38,7 @@ const profileSlice = createSlice({
   name: "profile",
   initialState: {
     profile: {
-      _id: "1",
+      _id: "66c7204eba8717a9387e278c",
       firstName: "Non",
       lastName: "Non",
       email: "non@gmail.com",

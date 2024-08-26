@@ -349,7 +349,7 @@ const readWishlist = async (userId) => {
 app.get("/api/users/user/:userId/wishlist", async (req, res) => {
   try {
     const products = await readWishlist(req.params.userId);
-    if (products.length > 0) {
+    if (products && products.length > 0) {
       res.json(products);
     } else {
       res.status(404).json({ error: `products not found` });
