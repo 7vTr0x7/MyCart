@@ -5,22 +5,24 @@ export const useFetchProductsByIds = (ids) => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch(
-        "https://mycartbackend.vercel.app/api/products/productIds",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(ids),
+      if (ids && ids.length > 0) {
+        const res = await fetch(
+          "https://mycartbackend.vercel.app/api/products/multiple/productIds",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify([...ids]),
+          }
+        );
+        if (!res.ok) {
+          console.log("Failed to read products");
         }
-      );
-      if (!res.ok) {
-        console.log("Failed to read products");
-      }
 
-      const data = await res.json();
-      setProducts(data);
+        const data = await res.json();
+        setProducts(data);
+      }
     } catch (error) {
       console.log(error);
     }

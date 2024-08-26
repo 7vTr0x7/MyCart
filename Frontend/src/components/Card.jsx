@@ -46,20 +46,21 @@ const Card = ({ prod }) => {
   };
 
   const addToCartHandler = (prod) => {
-    dispatch(addToCart(prod));
-    toast.success("Added to Cart");
+    dispatch(addToCart(prod)).then(() => {
+      dispatch(readWishlist()).then(() => {
+        toast.success("Added to Cart");
+      });
+    });
   };
 
   useEffect(() => {
-    dispatch(readWishlist());
-  }, []);
-
-  console.log(wishlistProductIds);
+    dispatch(readWishlist(_id));
+  }, [_id]);
 
   return (
     <>
       <div>
-        {/* {wishlistProductIds && wishlistProductIds.includes(prod._id) ? (
+        {wishlistProductIds && wishlistProductIds.includes(prod._id) ? (
           <IoMdHeart
             onClick={() => removeFromWishlistHandler(prod._id)}
             className="fs-4 mt-2 mx-2"
@@ -77,7 +78,7 @@ const Card = ({ prod }) => {
               right: "0",
             }}
           />
-        )} */}
+        )}
         <img
           className="img-fluid card-img-top"
           style={{ cursor: "pointer" }}
