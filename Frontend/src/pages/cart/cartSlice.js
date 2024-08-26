@@ -112,6 +112,7 @@ const cartSlice = createSlice({
     });
     builder.addCase(addToCart.fulfilled, (state, action) => {
       state.status = "Success";
+      state.productIds = action.payload;
     });
     builder.addCase(addToCart.rejected, (state, action) => {
       state.status = "failed";
@@ -133,6 +134,7 @@ const cartSlice = createSlice({
     });
     builder.addCase(removeFromCart.fulfilled, (state, action) => {
       state.status = "Success";
+      state.productIds = action.payload;
     });
     builder.addCase(removeFromCart.rejected, (state, action) => {
       state.status = "failed";

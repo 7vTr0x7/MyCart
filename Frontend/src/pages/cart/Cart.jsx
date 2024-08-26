@@ -24,7 +24,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(readCart(_id));
-  }, [_id]);
+  }, [_id, productIds.length]);
 
   return (
     <>

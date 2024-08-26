@@ -63,6 +63,8 @@ const ProductCard = ({ product, isCart }) => {
   };
 
   const removeFromCartHandler = (id) => {
+    toast.success("Please Wait");
+
     if (productIds.includes(id)) {
       dispatch(removeFromCart({ userId: _id, prodId: id })).then(() => {
         dispatch(readCart(_id)).then(() => {
@@ -73,7 +75,6 @@ const ProductCard = ({ product, isCart }) => {
   };
 
   const handleIncrement = () => {
-    toast.success("Please Wait");
     dispatch(incQuantity(product._id));
     toast.success("Increased Quantity");
   };

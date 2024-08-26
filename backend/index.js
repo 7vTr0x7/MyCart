@@ -389,7 +389,9 @@ const removeFromWishlist = async (userId, prodId) => {
     user.wishlist = user.wishlist.filter((id) => id != prodId);
     const updated = await user.save();
     return updated.wishlist;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 app.delete("/api/users/user/:userId/wishlist", async (req, res) => {
@@ -460,7 +462,9 @@ const removeFromCart = async (userId, prodId) => {
     user.cart = user.cart.filter((id) => id != prodId);
     const updated = await user.save();
     return updated.cart;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 app.delete("/api/users/user/:userId/cart", async (req, res) => {
