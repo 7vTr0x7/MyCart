@@ -18,4 +18,8 @@ export const useFetchProductsByIds = () => {
       console.log(error);
     }
   };
+
+  fetchData();
+
+  return products;
 };
