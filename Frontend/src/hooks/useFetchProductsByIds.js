@@ -8,7 +8,7 @@ export const useFetchProductsByIds = (ids) => {
       const res = await fetch(
         "https://mycartbackend.vercel.app/api/products/productIds",
         {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
