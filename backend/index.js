@@ -373,7 +373,7 @@ const addToWishlist = async (userId, prodId) => {
 app.post("/api/users/user/:userId/wishlist", async (req, res) => {
   try {
     const products = await addToWishlist(req.params.userId, req.body._id);
-    if (products) {
+    if (products.length > 0) {
       res.json(products);
     } else {
       res.status(404).json({ error: `product not found` });
@@ -444,7 +444,7 @@ const addToCart = async (userId, prodId) => {
 app.post("/api/users/user/:userId/cart", async (req, res) => {
   try {
     const products = await addToCart(req.params.userId, req.body._id);
-    if (products) {
+    if (products.length > 0) {
       res.json(products);
     } else {
       res.status(404).json({ error: `product not found` });
