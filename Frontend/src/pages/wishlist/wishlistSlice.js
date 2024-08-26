@@ -27,6 +27,49 @@ export const addToWishlist = createAsyncThunk(
     }
   }
 );
+export const removeFromWishlist = createAsyncThunk(
+  "removeFromWishlist",
+  async ({ userId, prodId }) => {
+    try {
+      const res = await fetch(
+        `https://mycartbackend.vercel.app/api/users/user/${userId}/wishlist`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prodId }),
+        }
+      );
+
+      if (!res.ok) {
+        console.log("Failed to add to wishlist");
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const readWishlist = createAsyncThunk("readWishlist", async (userId) => {
+  try {
+    const res = await fetch(
+      `https://mycartbackend.vercel.app/api/users/user/${userId}/wishlist`
+    );
+
+    if (!res.ok) {
+      console.log("Failed to read wishlist");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const wishlistSlice = createSlice({
   name: "wishlist",
@@ -43,16 +86,33 @@ const wishlistSlice = createSlice({
     });
     builder.addCase(addToWishlist.fulfilled, (state, action) => {
       state.status = "Success";
-
-      state.wishlistProductIds = [...state.wishlistProductIds, action.payload];
     });
     builder.addCase(addToWishlist.rejected, (state, action) => {
       state.status = "failed";
       state.error = "failed to add to wishlist";
     });
+    builder.addCase(readWishlist.pending, (state, action) => {
+      state.status = "Loading";
+    });
+    builder.addCase(readWishlist.fulfilled, (state, action) => {
+      state.status = "Success";
+      state.wishlistProductIds = action.payload;
+    });
+    builder.addCase(readWishlist.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = "failed to read wishlist";
+    });
+    builder.addCase(removeFromWishlist.pending, (state, action) => {
+      state.status = "Loading";
+    });
+    builder.addCase(removeFromWishlist.fulfilled, (state, action) => {
+      state.status = "Success";
+    });
+    builder.addCase(removeFromWishlist.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = "failed to remove from wishlist";
+    });
   },
 });
-
-export const { removeFromWishlist } = wishlistSlice.actions;
 
 export default wishlistSlice.reducer;
