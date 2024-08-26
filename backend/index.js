@@ -476,6 +476,33 @@ app.delete("/api/users/user/:userId/cart", async (req, res) => {
   }
 });
 
+const readMultipleProducts = async (ids) => {
+  try {
+    const products = [];
+    for (let i = 0; i < ids.length; i++) {
+      const product = await Product.findById(ids[i]);
+      products.push(product);
+    }
+
+    return products;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("/api/products/productIds", async (req, res) => {
+  try {
+    const products = await readMultipleProducts(req.body);
+    if (products.length > 0) {
+      res.json(products);
+    } else {
+      res.status(404).json({ error: `products not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to read  Products ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
