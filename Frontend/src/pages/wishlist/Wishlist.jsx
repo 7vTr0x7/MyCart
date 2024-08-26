@@ -37,13 +37,15 @@ const Wishlist = () => {
           <p className="text-center fs-6  fw-bold">Wishlist is Empty</p>
         )}
         <div className="row mt-2 mb-3">
-          {wishlist.map((prod) => (
-            <div key={prod._id} className="col-md-3 mt-3">
-              <div className="card">
-                <Card prod={prod} />
+          {wishlist &&
+            wishlist.length > 0 &&
+            wishlist.map((prod) => (
+              <div key={prod._id} className="col-md-3 mt-3">
+                <div className="card">
+                  <Card prod={prod} />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
         <Toaster />
       </main>

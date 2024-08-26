@@ -104,7 +104,9 @@ const wishlistSlice = createSlice({
     });
     builder.addCase(readWishlist.fulfilled, (state, action) => {
       state.status = "Success";
-      state.wishlistProductIds = action.payload;
+      if (action.payload && action.payload.length > 0) {
+        state.wishlistProductIds = action.payload;
+      }
     });
     builder.addCase(readWishlist.rejected, (state, action) => {
       state.status = "failed";
