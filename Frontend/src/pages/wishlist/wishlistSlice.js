@@ -79,7 +79,14 @@ const wishlistSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    addProductsToWishlist: (state, action) => {
+      return {
+        ...state,
+        wishlist: [...action.payload],
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addToWishlist.pending, (state, action) => {
       state.status = "Loading";
@@ -114,5 +121,7 @@ const wishlistSlice = createSlice({
     });
   },
 });
+
+export const { addProductsToWishlist } = wishlistSlice.actions;
 
 export default wishlistSlice.reducer;
