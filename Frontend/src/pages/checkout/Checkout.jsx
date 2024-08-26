@@ -46,7 +46,7 @@ const Checkout = () => {
             </>
           ) : (
             <div className="card p-3 " style={{ width: "30rem" }}>
-              <p className="text-center m-0 fs-4 fw-semibold ">Order Details</p>
+              <p className="text-center m-0 fs-4 fw-semibold ">Order Summary</p>
               <hr />
               <div className="d-flex justify-content-between">
                 <div>

@@ -32,7 +32,7 @@ const PriceDetails = ({ products }) => {
               )
             </span>
             <span className="fs-6 fw-semibold m-0">
-              ${`${productPrice.toFixed(2)}`}
+              ${`${(productPrice + discountAmount).toFixed(2)}`}
             </span>
           </div>
           {discountAmount && (
