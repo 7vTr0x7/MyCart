@@ -27,6 +27,33 @@ export const addToCart = createAsyncThunk(
   }
 );
 
+export const removeFromCart = createAsyncThunk(
+  "removeFromCart",
+  async ({ userId, prodId }) => {
+    try {
+      const res = await fetch(
+        `https://mycartbackend.vercel.app/api/users/user/${userId}/cart`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ prodId }),
+        }
+      );
+
+      if (!res.ok) {
+        console.log("Failed to remove from cart");
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const readCart = createAsyncThunk("readCart", async (userId) => {
   try {
     const res = await fetch(
@@ -34,7 +61,7 @@ export const readCart = createAsyncThunk("readCart", async (userId) => {
     );
 
     if (!res.ok) {
-      console.log("Failed to add to cart");
+      console.log("Failed to read cart");
     }
 
     const data = await res.json();
@@ -96,9 +123,19 @@ const cartSlice = createSlice({
       state.status = "failed";
       state.error = "failed";
     });
+    builder.addCase(removeFromCart.pending, (state, action) => {
+      state.status = "Loading";
+    });
+    builder.addCase(removeFromCart.fulfilled, (state, action) => {
+      state.status = "Success";
+    });
+    builder.addCase(removeFromCart.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = "failed";
+    });
   },
 });
 
-export const { removeFromCart, incQuantity, decQuantity } = cartSlice.actions;
+export const { incQuantity, decQuantity } = cartSlice.actions;
 
 export default cartSlice.reducer;
