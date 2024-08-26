@@ -372,7 +372,7 @@ const addToWishlist = async (userId, prodId) => {
 
 app.post("/api/users/user/:userId/wishlist", async (req, res) => {
   try {
-    const products = await addToWishlist(req.params.userId, req.body._id);
+    const products = await addToWishlist(req.params.userId, req.body.prodId);
     if (products.length > 0) {
       res.json(products);
     } else {
@@ -443,7 +443,7 @@ const addToCart = async (userId, prodId) => {
 
 app.post("/api/users/user/:userId/cart", async (req, res) => {
   try {
-    const products = await addToCart(req.params.userId, req.body._id);
+    const products = await addToCart(req.params.userId, req.body.prodId);
     if (products.length > 0) {
       res.json(products);
     } else {
