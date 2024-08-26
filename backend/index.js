@@ -480,7 +480,7 @@ const readMultipleProducts = async (ids) => {
   try {
     const products = [];
     for (let i = 0; i < ids.length; i++) {
-      const product = await Product.findById(ids[i]);
+      const product = await Product.findOne({ _id: ids[i] });
       products.push(product);
     }
 
@@ -490,7 +490,7 @@ const readMultipleProducts = async (ids) => {
   }
 };
 
-app.get("/api/products/productIds", async (req, res) => {
+app.get("/api/products/multiple/productIds", async (req, res) => {
   try {
     const products = await readMultipleProducts(req.body);
     if (products.length > 0) {
