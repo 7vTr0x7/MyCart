@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const PriceDetails = ({ products }) => {
   const productPrice = products.reduce((acc, curr) => {
@@ -64,7 +65,19 @@ const PriceDetails = ({ products }) => {
             You Will Save ${discountAmount.toFixed(2)} on This Order
           </p>
 
-          <button className="btn btn-light fw-bold w-100 ">Place Order</button>
+          <button className="btn btn-light fw-bold w-100 ">
+            <Link
+              to="/checkout"
+              className="nav-link"
+              state={{
+                products,
+                productPrice,
+                discountAmount,
+                deliveryCharge,
+              }}>
+              Place Order
+            </Link>
+          </button>
         </div>
       )}
     </>
