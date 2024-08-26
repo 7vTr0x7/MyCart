@@ -12,15 +12,16 @@ const Wishlist = () => {
   const wishlistProductIds = useSelector(
     (state) => state.wishlist.wishlistProductIds
   );
+  console.log(wishlistProductIds);
 
   const products = useFetchProductsByIds(wishlistProductIds);
 
-  console.log(wishlist);
-
   useEffect(() => {
-    dispatch(readWishlist()).then(() => {
-      dispatch(addProductsToWishlist(products));
-    });
+    if (products.length > 0) {
+      dispatch(readWishlist()).then(() => {
+        dispatch(addProductsToWishlist(products));
+      });
+    }
   }, []);
 
   return (
