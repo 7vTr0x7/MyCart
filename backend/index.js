@@ -408,6 +408,74 @@ app.delete("/api/users/user/:userId/wishlist", async (req, res) => {
   }
 });
 
+const readCart = async (userId) => {
+  try {
+    const user = await Users.findById(userId);
+    return user.cart;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.get("/api/users/user/:userId/cart", async (req, res) => {
+  try {
+    const products = await readCart(req.params.userId);
+    if (products.length > 0) {
+      res.json(products);
+    } else {
+      res.status(404).json({ error: `products not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to get cart ${error}` });
+  }
+});
+
+const addToCart = async (userId, prodId) => {
+  try {
+    const user = await Users.findById(userId);
+    user.cart.push(prodId);
+    const updated = await user.save();
+    return updated.cart;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.post("/api/users/user/:userId/cart", async (req, res) => {
+  try {
+    const products = await addToCart(req.params.userId, req.body._id);
+    if (products) {
+      res.json(products);
+    } else {
+      res.status(404).json({ error: `product not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to add to cart ${error}` });
+  }
+});
+
+const removeFromCart = async (userId, prodId) => {
+  try {
+    const user = await Users.findById(userId);
+    user.cart = user.cart.filter((id) => id != prodId);
+    const updated = await user.save();
+    return updated.cart;
+  } catch (error) {}
+};
+
+app.delete("/api/users/user/:userId/cart", async (req, res) => {
+  try {
+    const products = await removeFromCart(req.params.userId, req.body.prodId);
+    if (products.length > 0) {
+      res.json(products);
+    } else {
+      res.status(404).json({ error: `products not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to remove from cart ${error}` });
+  }
+});
+
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
