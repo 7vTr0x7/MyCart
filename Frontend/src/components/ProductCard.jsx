@@ -6,6 +6,7 @@ import {
   addToCart,
   decQuantity,
   incQuantity,
+  readCart,
   removeFromCart,
 } from "../pages/cart/cartSlice";
 import {
@@ -52,7 +53,9 @@ const ProductCard = ({ product, isCart }) => {
   const addToCartHandler = (id) => {
     if (!productIds.includes(id)) {
       dispatch(addToCart({ userId: _id, prodId: id })).then(() => {
-        toast.success("Added to wishlist");
+        dispatch(readCart(_id)).then(() => {
+          toast.success("Added to wishlist");
+        });
       });
     }
   };
@@ -60,7 +63,9 @@ const ProductCard = ({ product, isCart }) => {
   const removeFromCartHandler = (id) => {
     if (productIds.includes(id)) {
       dispatch(removeFromCart({ userId: _id, prodId: id })).then(() => {
-        toast.success("Removed From wishlist");
+        dispatch(readCart(_id)).then(() => {
+          toast.success("Removed From wishlist");
+        });
       });
     }
   };
@@ -80,6 +85,7 @@ const ProductCard = ({ product, isCart }) => {
 
   useEffect(() => {
     dispatch(readWishlist(_id));
+    dispatch(readCart(_id));
   }, [_id]);
 
   return (

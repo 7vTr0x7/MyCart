@@ -11,7 +11,7 @@ import {
   readWishlist,
   removeFromWishlist,
 } from "../pages/wishlist/wishlistSlice";
-import { addToCart } from "../pages/cart/cartSlice";
+import { addToCart, readCart } from "../pages/cart/cartSlice";
 
 const Card = ({ prod }) => {
   const dispatch = useDispatch();
@@ -47,17 +47,19 @@ const Card = ({ prod }) => {
       });
     }
   };
-
-  const addToCartHandler = (prod) => {
-    dispatch(addToCart(prod)).then(() => {
-      dispatch(readWishlist(_id)).then(() => {
-        toast.success("Added to Cart");
+  const addToCartHandler = (id) => {
+    if (!productIds.includes(id)) {
+      dispatch(addToCart({ userId: _id, prodId: id })).then(() => {
+        dispatch(readCart(_id)).then(() => {
+          toast.success("Added to wishlist");
+        });
       });
-    });
+    }
   };
 
   useEffect(() => {
     dispatch(readWishlist(_id));
+    dispatch(readCart(_id));
   }, [_id]);
 
   return (
