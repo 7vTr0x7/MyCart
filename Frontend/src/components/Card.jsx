@@ -58,7 +58,7 @@ const Card = ({ prod }) => {
 
   useEffect(() => {
     dispatch(readWishlist(_id));
-  }, []);
+  }, [_id]);
 
   return (
     <>

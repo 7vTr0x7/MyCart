@@ -26,7 +26,7 @@ const Wishlist = () => {
 
   useEffect(() => {
     dispatch(readWishlist(_id));
-  }, []);
+  }, [_id]);
 
   return (
     <>

@@ -74,7 +74,7 @@ const ProductCard = ({ product, isCart }) => {
 
   useEffect(() => {
     dispatch(readWishlist(_id));
-  }, []);
+  }, [_id]);
 
   return (
     <>
