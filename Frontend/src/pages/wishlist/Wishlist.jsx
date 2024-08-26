@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/Header";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Card from "../../components/Card";
 import toast, { Toaster } from "react-hot-toast";
+import { useFetchProductsByIds } from "../../hooks/useFetchProductsByIds";
+import { addProductsToWishlist, readWishlist } from "./wishlistSlice";
 
 const Wishlist = () => {
+  const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.wishlist);
+  const wishlistProductIds = useSelector(
+    (state) => state.wishlist.wishlistProductIds
+  );
+
+  const products = useFetchProductsByIds(wishlistProductIds);
+
+  console.log(wishlist);
+
+  useEffect(() => {
+    dispatch(readWishlist()).then(() => {
+      dispatch(addProductsToWishlist(products));
+    });
+  }, []);
 
   return (
     <>

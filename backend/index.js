@@ -490,7 +490,7 @@ const readMultipleProducts = async (ids) => {
   }
 };
 
-app.get("/api/products/multiple/productIds", async (req, res) => {
+app.post("/api/products/multiple/productIds", async (req, res) => {
   try {
     const products = await readMultipleProducts(req.body);
     if (products.length > 0) {
