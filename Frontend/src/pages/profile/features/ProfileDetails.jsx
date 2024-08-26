@@ -27,11 +27,15 @@ const ProfileDetails = () => {
   const deleteAddressHandler = (addressId) => {
     toast.success("Please Wait");
 
-    dispatch(deleteAddress({ userId: _id, addressId })).then(() => {
-      dispatch(readAddress(_id)).then(() => {
-        toast.success("Address Deleted");
+    if (addresses.length === 1) {
+      toast.error("Add new address before deleting this one");
+    } else {
+      dispatch(deleteAddress({ userId: _id, addressId })).then(() => {
+        dispatch(readAddress(_id)).then(() => {
+          toast.success("Address Deleted");
+        });
       });
-    });
+    }
   };
 
   const logoutHandler = () => {
@@ -107,36 +111,37 @@ const ProfileDetails = () => {
                   </>
                 ) : (
                   <>
-                    {addresses.map((address) => (
-                      <div key={address._id}>
-                        <p className="fs-5 fw-semibold m-0">{address.name}</p>
-                        <p className="fs-6 fw-semibold my-1">
-                          {`${address.houseNo}, ${address.street}`}
-                        </p>
-                        <p className="fs-6 fw-semibold my-1">
-                          {` ${address.city}, ${address.state} - ${address.postalCode}`}
-                        </p>
-                        <p className="fs-6 fw-semibold my-1">
-                          {`  ${address.country}`}
-                        </p>
-                        <p className="fs-6 fw-semibold my-1">
-                          {` Contact: ${address.mobileNumber}`}
-                        </p>
-                        <div className="my-3">
-                          <button
-                            onClick={() => editAddressHandler(address._id)}
-                            className="btn btn-light fs-6 fw-semibold">
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => deleteAddressHandler(address._id)}
-                            className="btn btn-light fs-6 fw-semibold mx-3">
-                            Delete
-                          </button>
+                    {addresses.length > 0 &&
+                      addresses.map((address) => (
+                        <div key={address._id}>
+                          <p className="fs-5 fw-semibold m-0">{address.name}</p>
+                          <p className="fs-6 fw-semibold my-1">
+                            {`${address.houseNo}, ${address.street}`}
+                          </p>
+                          <p className="fs-6 fw-semibold my-1">
+                            {` ${address.city}, ${address.state} - ${address.postalCode}`}
+                          </p>
+                          <p className="fs-6 fw-semibold my-1">
+                            {`  ${address.country}`}
+                          </p>
+                          <p className="fs-6 fw-semibold my-1">
+                            {` Contact: ${address.mobileNumber}`}
+                          </p>
+                          <div className="my-3">
+                            <button
+                              onClick={() => editAddressHandler(address._id)}
+                              className="btn btn-light fs-6 fw-semibold">
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => deleteAddressHandler(address._id)}
+                              className="btn btn-light fs-6 fw-semibold mx-3">
+                              Delete
+                            </button>
+                          </div>
+                          <hr />
                         </div>
-                        <hr />
-                      </div>
-                    ))}
+                      ))}
                   </>
                 )}
               </div>
