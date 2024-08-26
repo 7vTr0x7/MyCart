@@ -27,11 +27,30 @@ export const addToCart = createAsyncThunk(
   }
 );
 
+export const readCart = createAsyncThunk("readCart", async (userId) => {
+  try {
+    const res = await fetch(
+      `https://mycartbackend.vercel.app/api/users/user/${userId}/cart`
+    );
+
+    if (!res.ok) {
+      console.log("Failed to add to cart");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
     cart: [],
     productIds: [],
+    status: "idle",
+    error: null,
   },
   reducers: {
     incQuantity: (state, action) => {
@@ -52,6 +71,31 @@ const cartSlice = createSlice({
         return state;
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(addToCart.pending, (state, action) => {
+      state.status = "Loading";
+    });
+    builder.addCase(addToCart.fulfilled, (state, action) => {
+      state.status = "Success";
+    });
+    builder.addCase(addToCart.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = "failed";
+    });
+    builder.addCase(readCart.pending, (state, action) => {
+      state.status = "Loading";
+    });
+    builder.addCase(readCart.fulfilled, (state, action) => {
+      state.status = "Success";
+      if (action.payload && action.payload > 0) {
+        state.productIds = action.payload;
+      }
+    });
+    builder.addCase(readCart.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = "failed";
+    });
   },
 });
 

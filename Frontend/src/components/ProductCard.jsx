@@ -25,11 +25,6 @@ const ProductCard = ({ product, isCart }) => {
 
   const productIds = useSelector((state) => state.cart.productIds);
 
-  const addToCartHandler = (prod) => {
-    dispatch(addToCart(prod));
-    toast.success("Added to wishlist");
-  };
-
   const addToWishlistHandler = (id) => {
     toast.success("Please Wait");
 
@@ -54,9 +49,20 @@ const ProductCard = ({ product, isCart }) => {
     }
   };
 
+  const addToCartHandler = (id) => {
+    if (!productIds.includes(id)) {
+      dispatch(addToCart({ userId: _id, prodId: id })).then(() => {
+        toast.success("Added to wishlist");
+      });
+    }
+  };
+
   const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id));
-    toast.success("Removed From wishlist");
+    if (productIds.includes(id)) {
+      dispatch(removeFromCart({ userId: _id, prodId: id })).then(() => {
+        toast.success("Removed From wishlist");
+      });
+    }
   };
 
   const handleIncrement = () => {
@@ -165,7 +171,7 @@ const ProductCard = ({ product, isCart }) => {
                   </>
                 ) : (
                   <button
-                    onClick={() => addToCartHandler(product)}
+                    onClick={() => addToCartHandler(product._id)}
                     className="btn btn-light w-100  fw-semibold">
                     Add to Cart
                   </button>
