@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import {
 } from "../pages/cart/cartSlice";
 import {
   addToWishlist,
+  readWishlist,
   removeFromWishlist,
 } from "../pages/wishlist/wishlistSlice";
 
@@ -18,20 +19,35 @@ const ProductCard = ({ product, isCart }) => {
   const wishlistProductIds = useSelector(
     (state) => state.wishlist.wishlistProductIds
   );
+  const profile = useSelector((state) => state.profile.profile);
+
+  const { _id } = profile;
+
   const productIds = useSelector((state) => state.cart.productIds);
 
-  const addToWishlistHandler = (prod) => {
-    dispatch(addToWishlist(prod));
-    toast.success("Added to wishlist");
-  };
   const addToCartHandler = (prod) => {
     dispatch(addToCart(prod));
     toast.success("Added to wishlist");
   };
 
-  const removeFromWishlistHandler = (prod) => {
-    dispatch(removeFromWishlist(prod));
-    toast.success("Removed From wishlist");
+  const addToWishlistHandler = (id) => {
+    if (!wishlistProductIds.includes(id) && _id) {
+      dispatch(addToWishlist({ userId: _id, prodId: id })).then(() => {
+        dispatch(readWishlist(_id)).then(() => {
+          toast.success("Added to wishlist");
+        });
+      });
+    }
+  };
+
+  const removeFromWishlistHandler = (id) => {
+    if (wishlistProductIds.includes(id) && _id) {
+      dispatch(removeFromWishlist({ userId: _id, prodId: id })).then(() => {
+        dispatch(readWishlist(_id)).then(() => {
+          toast.success("Removed From wishlist");
+        });
+      });
+    }
   };
 
   const removeFromCartHandler = (id) => {
@@ -51,6 +67,10 @@ const ProductCard = ({ product, isCart }) => {
       toast.error("Add Quantity");
     }
   };
+
+  useEffect(() => {
+    dispatch(readWishlist(_id));
+  }, []);
 
   return (
     <>
@@ -148,15 +168,17 @@ const ProductCard = ({ product, isCart }) => {
                 )}
               </div>
               <div>
-                {wishlistProductIds.includes(product._id) ? (
+                {wishlistProductIds &&
+                wishlistProductIds.length > 0 &&
+                wishlistProductIds.includes(product._id) ? (
                   <button
-                    onClick={() => removeFromWishlistHandler(product)}
+                    onClick={() => removeFromWishlistHandler(product._id)}
                     className="btn btn-light w-100  fw-semibold">
                     Remove from Wishlist
                   </button>
                 ) : (
                   <button
-                    onClick={() => addToWishlistHandler(product)}
+                    onClick={() => addToWishlistHandler(product._id)}
                     className="btn btn-light w-100  fw-semibold">
                     Add to Wishlist
                   </button>

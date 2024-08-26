@@ -25,10 +25,9 @@ const Card = ({ prod }) => {
   const productIds = useSelector((state) => state.cart.productIds);
 
   const addToWishlistHandler = (id) => {
-    console.log(wishlistProductIds.includes(id));
-    if (!wishlistProductIds.includes(id)) {
+    if (!wishlistProductIds.includes(id) && _id) {
       dispatch(addToWishlist({ userId: _id, prodId: id })).then(() => {
-        dispatch(readWishlist()).then(() => {
+        dispatch(readWishlist(_id)).then(() => {
           toast.success("Added to wishlist");
         });
       });
@@ -36,9 +35,9 @@ const Card = ({ prod }) => {
   };
 
   const removeFromWishlistHandler = (id) => {
-    if (wishlistProductIds.includes(id)) {
+    if (wishlistProductIds.includes(id) && _id) {
       dispatch(removeFromWishlist({ userId: _id, prodId: id })).then(() => {
-        dispatch(readWishlist()).then(() => {
+        dispatch(readWishlist(_id)).then(() => {
           toast.success("Removed From wishlist");
         });
       });
@@ -47,7 +46,7 @@ const Card = ({ prod }) => {
 
   const addToCartHandler = (prod) => {
     dispatch(addToCart(prod)).then(() => {
-      dispatch(readWishlist()).then(() => {
+      dispatch(readWishlist(_id)).then(() => {
         toast.success("Added to Cart");
       });
     });
@@ -55,12 +54,14 @@ const Card = ({ prod }) => {
 
   useEffect(() => {
     dispatch(readWishlist(_id));
-  }, [_id]);
+  }, []);
 
   return (
     <>
       <div>
-        {wishlistProductIds && wishlistProductIds.includes(prod._id) ? (
+        {wishlistProductIds &&
+        wishlistProductIds.length > 0 &&
+        wishlistProductIds.includes(prod._id) ? (
           <IoMdHeart
             onClick={() => removeFromWishlistHandler(prod._id)}
             className="fs-4 mt-2 mx-2"

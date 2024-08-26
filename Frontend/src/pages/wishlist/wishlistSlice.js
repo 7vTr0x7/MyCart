@@ -21,9 +21,7 @@ export const addToWishlist = createAsyncThunk(
       }
 
       const data = await res.json();
-      console.log(userId);
-      console.log({ prodId });
-      console.log(data);
+
       return data;
     } catch (error) {
       console.log(error);
