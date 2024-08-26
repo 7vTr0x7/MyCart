@@ -9,6 +9,7 @@ import Products from "./pages/products/Products";
 import Profile from "./pages/profile/Profile";
 import Wishlist from "./pages/wishlist/Wishlist";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
+import Checkout from "./pages/checkout/Checkout";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Route>
         </Routes>
       </Router>
