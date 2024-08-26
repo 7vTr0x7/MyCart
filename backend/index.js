@@ -383,10 +383,30 @@ app.post("/api/users/user/:userId/wishlist", async (req, res) => {
   }
 });
 
-// const removeFromWishlist = async(userId) => {
-//   trycatch
+const removeFromWishlist = async (userId, prodId) => {
+  try {
+    const user = await Users.findById(userId);
+    user.wishlist = user.wishlist.filter((id) => id != prodId);
+    const updated = await user.save();
+    return updated.wishlist;
+  } catch (error) {}
+};
 
-// }
+app.delete("/api/users/user/:userId/wishlist", async (req, res) => {
+  try {
+    const products = await removeFromWishlist(
+      req.params.userId,
+      req.body.prodId
+    );
+    if (products.length > 0) {
+      res.json(products);
+    } else {
+      res.status(404).json({ error: `products not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: `Failed to remove from wishlist ${error}` });
+  }
+});
 
 const PORT = 4000;
 app.listen(PORT, () => {
